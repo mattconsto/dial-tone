@@ -132,7 +132,11 @@ public class SocketController : MonoBehaviour {
 	void LineTo(GameObject o1, GameObject o2) {
 		var r = o1.GetComponent<LineRenderer> ();
 		r.enabled = true;
-		Vector3[] positions = { o1.transform.position, o2.transform.position };
+		Vector3 p1 = o1.transform.position;
+		p1.z = -15;
+		Vector3 p2 = o2.transform.position;
+		p2.z = -15;
+		Vector3[] positions = { p1, p2 };
 		r.SetPositions(positions);
 	}
 
