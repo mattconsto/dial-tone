@@ -113,6 +113,7 @@ public class GameController : MonoBehaviour {
 			if(!txtwrite.speaking)
 			{
 				SentanceObject sent = curconv.getNextSentance();
+				hasnext = curconv.hasNextSentance ();
 				Debug.Log("[Story]"+sent.content);
 				txtwrite.Say(string.Format(sent.content,sent.targetPort),sent.textColor,sent.Alignment);
 			}
