@@ -9,6 +9,8 @@ public class ConversationLoader {
 	ArrayList drives = new ArrayList ();
 	ArrayList requests = new ArrayList ();
 	ArrayList story = new ArrayList ();
+	ArrayList forenames = new ArrayList ();
+	ArrayList surnames = new ArrayList ();
 	public bool finishedLoading = false;
 
 	int storyProgression = 0;
@@ -19,10 +21,35 @@ public class ConversationLoader {
 		//loadFromFile(drives,"drive.txt");
 		//loadFromFile(requests,"request.txt");
 		loadFromFile(story,"operator.txt");
+		loadNames ("names.csv");
 		finishedLoading = true;
 		Debug.Log ("Finished loading");
 	}
-	
+
+	 void loadNames(string filename){
+		StreamReader sr = new StreamReader(Application.dataPath + "/ConversationFiles/" + filename);
+		string line;
+		string[] row;
+		while ((line = sr.ReadLine()) != null)
+		{
+			row = line.Split(',');
+			forenames.Add (row [0]);
+			surnames.Add (row [1]);
+		}
+
+	}
+
+	public string getRandomName(){
+		int f = (int)(Random.value * 100) % forenames.Count;
+		string forename = (string) forenames [f];
+		forenames.RemoveAt (f);
+		int s = (int)(Random.value * 100) % surnames.Count;
+		string surname = (string) surnames [s];
+		surnames.RemoveAt (s);
+		return forename + " " + surname;
+	}
+
+
 	void loadFromFile(ArrayList list, string filename)
 	{
 		//Debug.Log ("Started loading "+filename);

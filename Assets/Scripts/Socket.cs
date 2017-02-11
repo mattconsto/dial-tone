@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 
 public class Socket : MonoBehaviour {
@@ -13,10 +12,24 @@ public class Socket : MonoBehaviour {
 	public GameObject insertedPlug = null;
     private GameObject plugInstance = null;
 	public bool locked = false;
-	public bool markedForUse;
+	private ArrayList names = new ArrayList();
+	public bool markedForUse = false;
 	public Sprite LED_OFF;
 	public Sprite LED_GREEN;
 	public Sprite LED_RED;
+
+	public string getRandomName(){
+		int i =  (int) (Random.value * 100) % names.Count;
+		return (string) names [i];
+	}
+
+	public void addName(string name){
+		names.Add (name);
+	}
+
+	public string[] getNames(){
+		return (string[]) names.ToArray();
+	}
 
     public bool IsPlugged()
     {
