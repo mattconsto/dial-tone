@@ -1,0 +1,18 @@
+***
+Hello, can you connect me to {0}, please.
+***
+Good Day, I'd like to be connected to {0} please.
+***
+Hi, I need to speak to {0}.
+***
+Connect me to {0}, NOW!
+***
+I need to talk to {0}, get me connected.
+***
+Get me connected to {0}. It's urgent.
+***
+{0}, please.
+***
+{0}, {0}, {0}. I need to talk to {0}.
+***
+{0}. Operator, I need {0}

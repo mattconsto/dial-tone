@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour {
 	public float betweenCalls_MAX = 5f;
 	ConversationLoader loader = new ConversationLoader ();
 	public SocketController sockControl;
-
+	public TextWriter txtwrite;
 
 	int day = 1;
 	int callsToday = 0;
@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour {
 			return;
 		//setGameState ();
 		manageCalls ();
-		manageConnections ();
+		manageConnections (Time.deltaTime);
 	}
 	void manageCalls()
 	{
@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour {
 
 		}
 	}
-	void manageConnections()
+	void manageConnections(float deltaTime)
 	{
 		//Ask andy code for connection complete for the pair
 		//Once connection made
@@ -75,25 +75,49 @@ public class GameController : MonoBehaviour {
 				curconv = loader.getNextConversation();
 				StartCoroutine(sendConversation());
 				inconversation = true;
+				sockControl.setLED (calls[i].incomingPort, "GREEN");
+				sockControl.setLED ("operator", "GREEN");
 			}
-			else
+			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name==calls[i].targetPort)
 			{
 				calls[i].connected = true;
+				sockControl.setLED (calls[i].incomingPort, "GREEN");
+				sockControl.setLED (calls[i].targetPort, "GREEN");
+			}
+			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name!=calls[i].targetPort)
+			{
+				//DROP CALL
+				sockControl.setLED (calls[i].incomingPort, "BLACK");
+				calls.RemoveAt(i);
+			}
+			else if(calls[i].connected)
+			{
+				calls[i].timeLeft -= deltaTime;
+				if(calls[i].timeLeft < 0)
+				{
+					sockControl.setLED (calls[i].incomingPort, "BLACK");
+					sockControl.setLED (calls[i].targetPort, "BLACK");
+					calls.RemoveAt(i);
+				}
 			}
 		}
 
 		//Display the LED for the incoming call
 
-		//Mark the target port as unavailable
-
 	}
 	IEnumerator sendConversation()
 	{
-		while(curconv.hasNextSentance())
+		bool hasnext = curconv.hasNextSentance ();
+		while(hasnext)
 		{
-			Debug.Log("[Story]"+curconv.getNextSentance().content);
-
-			return new WaitforSeconds(0.1);
+			if(!txtwrite.speaking)
+			{
+				SentanceObject sent = curconv.getNextSentance();
+				hasnext = curconv.hasNextSentance ();
+				Debug.Log("[Story]"+sent.content);
+//				txtwrite.Say(string.Format(sent.content,sent.targetPort),sent.textColor,sent.Alignment);
+			}
+			yield return new WaitForFixedUpdate();
 		}
 		inconversation = false;
 	}
@@ -121,7 +145,7 @@ public class GameController : MonoBehaviour {
 		pending.conv = loader.getRandomConversation ();
 		
 		//Display the input socket as lit up
-		
+		sockControl.setLED (pending.incomingPort, "RED");
 		//tell andy code to listen for connection
 		
 	}
@@ -163,4 +187,4 @@ public class GameController : MonoBehaviour {
 			}
 		}
 	}
-}
+} 

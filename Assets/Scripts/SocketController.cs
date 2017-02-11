@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Tuple<T1, T2> {
     public T1 First { get; private set; }
@@ -102,6 +104,10 @@ public class SocketController : MonoBehaviour {
         Debug.Log("Inserted");
     }
 
+	public void setLED(string socket, string colour) {
+		Socket s = getSocket (socket);
+	}
+
     public void SocketClick(Socket socket) {
 		if (isHoldingAPlug()) {
             if (!socket.IsPlugged())
@@ -126,7 +132,11 @@ public class SocketController : MonoBehaviour {
 	void LineTo(GameObject o1, GameObject o2) {
 		var r = o1.GetComponent<LineRenderer> ();
 		r.enabled = true;
-		Vector3[] positions = { o1.transform.position, o2.transform.position };
+		Vector3 p1 = o1.transform.position;
+		p1.z = -15;
+		Vector3 p2 = o2.transform.position;
+		p2.z = -15;
+		Vector3[] positions = { p1, p2 };
 		r.SetPositions(positions);
 	}
 
@@ -145,6 +155,25 @@ public class SocketController : MonoBehaviour {
 			ClearLine (socket.transform.gameObject);
 		}
 		if (isHoldingAPlug()) {
+			if( Input.GetMouseButtonDown(0) )
+			{
+				var mousePos = Input.mousePosition;
+				//Code to be place in a MonoBehaviour with a GraphicRaycaster component
+				GraphicRaycaster gr = this.GetComponent<GraphicRaycaster>();
+				//Create the PointerEventData with null for the EventSystem
+				PointerEventData ped = new PointerEventData(null);
+				//Set required parameters, in this case, mouse position
+				ped.position = Input.mousePosition;
+				//Create list to receive all results
+				List<RaycastResult> results = new List<RaycastResult>();
+				//Raycast it
+				gr.Raycast(ped, results);
+				if (results.Count == 0) {
+					Debug.Log ("YOU MISSED");
+				} else {
+					Debug.Log ("You didn't miss");
+				}
+			}
 			GameObject from_o = from.transform.gameObject;
 			GameObject to_o = mousePlugInstance.transform.gameObject;
 			LineTo (from_o, to_o);
