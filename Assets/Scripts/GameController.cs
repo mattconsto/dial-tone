@@ -90,8 +90,8 @@ public class GameController : MonoBehaviour {
 			//don't display call unless tapped
 		//Debug.Log("MANAGING()");
 		for (int i=0; i<calls.Count; i++) {
-			if(sockControl.getConnectedTo(calls[i].incomingPort)!=null)
-				Debug.Log("ID:"+i+"PORT:"+calls[i].incomingPort+" connected to "+sockControl.getConnectedTo(calls[i].incomingPort).name+" Target:"+calls[i].targetPort);
+			//if(sockControl.getConnectedTo(calls[i].incomingPort)!=null)
+				//Debug.Log("ID:"+i+"PORT:"+calls[i].incomingPort+" connected to "+sockControl.getConnectedTo(calls[i].incomingPort).name+" Target:"+calls[i].targetPort);
 			if(!calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort)!=null && sockControl.getConnectedTo(calls[i].incomingPort).name=="operator" && !inconversation)
 			{
 				//Debug.Log("CONNTECED CORRECTLY");
@@ -123,8 +123,9 @@ public class GameController : MonoBehaviour {
                 calls.RemoveAt(i);
                 Debug.Log("Dropped Call");
 			}
-			else if(calls[i].connected)
+			if(calls[i].connected)
 			{
+                Debug.Log("ID:" + i + " t:" + calls[i].timeLeft);
 				calls[i].timeLeft -= deltaTime;
 				if(calls[i].timeLeft < 0)
 				{
