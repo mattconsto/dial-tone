@@ -13,7 +13,7 @@ public class TextWriter : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		i = 0;
-		Say ("Testing, testing, testing.", Color.red, "left");
+		Say ("testing, testing, testing", Color.red, "left");
 	}
 
 	public void Say (string toSay, Color colour, string allignment) {
@@ -28,7 +28,6 @@ public class TextWriter : MonoBehaviour {
 		if (i < toWrite.Length) {
 			text.text += toWrite[i].ToString();
 			i++;
-			source.Play ();
 		}
 
 	}
