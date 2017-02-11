@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour {
 			return;
 		//setGameState ();
 		manageCalls ();
-		manageConnections ();
+		manageConnections (Time.deltaTime);
 	}
 	void manageCalls()
 	{
@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour {
 
 		}
 	}
-	void manageConnections()
+	void manageConnections(float deltaTime)
 	{
 		//Ask andy code for connection complete for the pair
 		//Once connection made
@@ -79,16 +79,17 @@ public class GameController : MonoBehaviour {
 			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name==calls[i].targetPort)
 			{
 				calls[i].connected = true;
-				Invoke(calls[i].endCall(),10f);
 			}
 			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name!=calls[i].targetPort)
 			{
 				//DROP CALL
 				calls.RemoveAt(i);
 			}
-			else if(calls[i].callEnded)
+			else if(calls[i].connected)
 			{
-				calls.RemoveAt(i);
+				calls[i].timeLeft -= deltaTime;
+				if(calls[i].timeLeft < 0)
+					calls.RemoveAt(i);
 			}
 		}
 
@@ -99,12 +100,16 @@ public class GameController : MonoBehaviour {
 	}
 	IEnumerator sendConversation()
 	{
-		while(curconv.hasNextSentance())
+		bool hasnext = curconv.hasNextSentance ();
+		while(hasnext)
 		{
-			SentanceObject sent = curconv.getNextSentance();
-			Debug.Log("[Story]"+sent.content);
-			txtwrite.Say(sent.content,sent.textColor,sent.Alignment);
-			yield return new WaitForSeconds(0.1f);
+			if(!txtwrite.speaking)
+			{
+				SentanceObject sent = curconv.getNextSentance();
+				Debug.Log("[Story]"+sent.content);
+				txtwrite.Say(sent.content,sent.textColor,sent.Alignment);
+			}
+			yield return new WaitForFixedUpdate();
 		}
 		inconversation = false;
 	}
