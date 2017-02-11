@@ -11,10 +11,9 @@ public class Socket : MonoBehaviour {
     private GameObject plugInstance = null;
 
 
-
     public bool IsPlugged()
     {
-        return plug == null;
+        return plugInstance != null;
     }
 
     public void AddPlug()
@@ -22,13 +21,14 @@ public class Socket : MonoBehaviour {
         // TODO: ID the plugs
         Debug.Log("Plug added");
         plugInstance = Instantiate(plug, transform.position, Quaternion.identity);
-        plugInstance.transform.parent = transform;
+        plugInstance.transform.SetParent(transform);
         Plug plugScript = plugInstance.GetComponent<Plug>();
         plugScript.enabled = false;
     }
 
     public void RemovePlug()
     {
+        Debug.Log("Removeplug");
         GameObject.DestroyImmediate(plugInstance);
     }
 
