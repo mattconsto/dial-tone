@@ -3,20 +3,29 @@ using System.Collections;
 using System.IO;
 using System.Text;
 
-public class ConversationLoader : MonoBehaviour {
+public class ConversationLoader {
 
 	ArrayList conversations = new ArrayList ();
 	ArrayList drives = new ArrayList ();
 	ArrayList requests = new ArrayList ();
-	void Awake()
+	ArrayList story = new ArrayList ();
+	public bool finishedLoading = false;
+
+	int storyProgression = 0;
+
+	public void init()
 	{
 		loadFromFile(conversations,"convo.txt");
 		loadFromFile(drives,"drive.txt");
-		loadFromFile(requests,"request.txt");
+		//loadFromFile(requests,"request.txt");
+		loadFromFile(story,"story.txt");
+		finishedLoading = true;
+		Debug.Log ("Finished loading");
 	}
 	
 	void loadFromFile(ArrayList list, string filename)
 	{
+		Debug.Log ("Started loading "+filename);
 		StringBuilder convstr;
 		StreamReader rdr = new StreamReader (Application.dataPath + "/ConversationFiles/" + filename, Encoding.Default);
 		using(rdr)
@@ -41,7 +50,12 @@ public class ConversationLoader : MonoBehaviour {
 			rdr.Close();
 		}
 	}
-	public Conversation choseRandomConversation()
+	public Conversation getNextConversation()
+	{
+		return (Conversation)story [storyProgression];
+		storyProgression++;
+	}
+	public Conversation getRandomConversation()
 	{
 		int convo = Random.Range (0, (conversations.Count - 1));
 		((Conversation)conversations [convo]).reset ();
@@ -54,6 +68,10 @@ public class ConversationLoader : MonoBehaviour {
 	public Conversation getRequest()
 	{
 		return (Conversation)requests [0];
+	}
+	public Conversation getStory(int day)
+	{
+		return (Conversation)story [day-1];
 	}
 	void accessData(JSONObject obj){
 		switch(obj.type){
