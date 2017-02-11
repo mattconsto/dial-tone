@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour {
 	public float betweenCalls_MAX = 5f;
 	ConversationLoader loader = new ConversationLoader ();
 	public SocketController sockControl;
-
+	public TextWriter txtwrite;
 
 	int day = 1;
 	int callsToday = 0;
@@ -76,9 +76,19 @@ public class GameController : MonoBehaviour {
 				StartCoroutine(sendConversation());
 				inconversation = true;
 			}
-			else
+			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name==calls[i].targetPort)
 			{
 				calls[i].connected = true;
+				Invoke(calls[i].endCall(),10f);
+			}
+			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name!=calls[i].targetPort)
+			{
+				//DROP CALL
+				calls.RemoveAt(i);
+			}
+			else if(calls[i].callEnded)
+			{
+				calls.RemoveAt(i);
 			}
 		}
 
@@ -91,9 +101,10 @@ public class GameController : MonoBehaviour {
 	{
 		while(curconv.hasNextSentance())
 		{
-			Debug.Log("[Story]"+curconv.getNextSentance().content);
-
-			return new WaitforSeconds(0.1);
+			SentanceObject sent = curconv.getNextSentance();
+			Debug.Log("[Story]"+sent.content);
+			txtwrite.Say(sent.content,sent.textColor,sent.Alignment);
+			yield return new WaitForSeconds(0.1f);
 		}
 		inconversation = false;
 	}
