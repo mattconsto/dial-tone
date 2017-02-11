@@ -6,15 +6,19 @@ using System.Text;
 public class ConversationLoader : MonoBehaviour {
 
 	ArrayList conversations = new ArrayList ();
+	ArrayList drives = new ArrayList ();
+	ArrayList requests = new ArrayList ();
 	void Awake()
 	{
-		loadFromFile();
+		loadFromFile(conversations,"convo.txt");
+		loadFromFile(drives,"drive.txt");
+		loadFromFile(requests,"request.txt");
 	}
 	
-	void loadFromFile()
+	void loadFromFile(ArrayList list, string filename)
 	{
 		StringBuilder convstr;
-		StreamReader rdr = new StreamReader(Application.dataPath+"/ConversationFiles/convo.txt",Encoding.Default);
+		StreamReader rdr = new StreamReader (Application.dataPath + "/ConversationFiles/" + filename, Encoding.Default);
 		using(rdr)
 		{
 			string line;
@@ -24,11 +28,11 @@ public class ConversationLoader : MonoBehaviour {
 				if(line!=null)
 				{
 					if(line.Equals("***"))
-						conversations.Add (new Conversation());
+						list.Add (new Conversation());
 					else
 					{
-						Debug.Log(conversations.Count);
-						((Conversation)conversations[conversations.Count-1]).addSentance(line);
+						((Conversation)list[list.Count-1]).addSentance(line);
+						conversations.Add (new Conversation());
 					}
 
 				}
@@ -36,13 +40,6 @@ public class ConversationLoader : MonoBehaviour {
 			while(line != null);
 			rdr.Close();
 		}
-		/*
-		if (jsonfile.Length != 0) {
-			JSONObject jsonobj = new JSONObject(jsonfile.ToString());
-			//jsonobj.GetField("conversations");
-			accessData(jsonobj);
-		}*/
-		
 	}
 	public Conversation choseRandomConversation()
 	{
@@ -50,7 +47,14 @@ public class ConversationLoader : MonoBehaviour {
 		((Conversation)conversations [convo]).reset ();
 		return (Conversation)conversations [convo];
 	}
-
+	public Conversation getDriveConversation(int day)
+	{
+		return (Conversation)drives[day];
+	}
+	public Conversation getRequest()
+	{
+		return (Conversation)requests [0];
+	}
 	void accessData(JSONObject obj){
 		switch(obj.type){
 		case JSONObject.Type.OBJECT:

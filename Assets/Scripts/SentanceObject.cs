@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NewBehaviourScript {
+public class SentanceObject {
 
-	public color textColor;
+	public Color textColor;
 	public string Alignment;
 	public string content;
 }

@@ -27,13 +27,13 @@ public class Conversation {
 		SentanceObject obj = new SentanceObject ();
 		obj.content = str;
 		if (isperson1) {
-			obj.color = person1;
+			obj.textColor = person1;
 			obj.Alignment = "left";
 		} else {
-			obj.color = person2;
+			obj.textColor = person2;
 			obj.Alignment = "right";
 		}
-		return str;
+		return obj;
 	}
 	public void reset()
 	{
