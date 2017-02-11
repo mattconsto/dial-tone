@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 
 public class Socket : MonoBehaviour {
 	public enum LEDColor {Red, Green, Off};
 	public Button yourButton;
     public SocketController controller;
-    public GameObject plug = null;
+	public GameObject plug = null;
+	public GameObject insertedPlug = null;
     private GameObject plugInstance = null;
 	public bool markedForUse = false;
 	public Sprite LED_OFF;
 	public Sprite LED_GREEN;
 	public Sprite LED_RED;
-
 
     public bool IsPlugged()
     {
@@ -25,10 +26,8 @@ public class Socket : MonoBehaviour {
     {
         // TODO: ID the plugs
         Debug.Log("Plug added to socket");
-        plugInstance = (GameObject)Instantiate(plug, transform.position, Quaternion.identity);
+        plugInstance = (GameObject)Instantiate(insertedPlug, transform.position, Quaternion.identity);
         plugInstance.transform.SetParent(transform);
-        Plug plugScript = plugInstance.GetComponent<Plug>();
-        plugScript.enabled = false;
 		setLED (LEDColor.Green);
     }
 

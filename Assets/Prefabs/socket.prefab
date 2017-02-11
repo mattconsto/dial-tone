@@ -151,6 +151,8 @@ MonoBehaviour:
   yourButton: {fileID: 114469014571545166}
   controller: {fileID: 0}
   plug: {fileID: 1355983594733290, guid: a2a5c75bcbdc9004690c84f6ed8e1f15, type: 2}
+  insertedPlug: {fileID: 1908687885203712, guid: a7ebe5db9728727448fb8da947c31021,
+    type: 2}
   markedForUse: 0
   LED_OFF: {fileID: 21300000, guid: 4543d13c5e69e75428d0980171b2b581, type: 3}
   LED_GREEN: {fileID: 21300000, guid: 409d078191b8da04a8eb5a890c65e2a8, type: 3}

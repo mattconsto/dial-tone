@@ -25,6 +25,17 @@ public class SocketController : MonoBehaviour {
 	private List<Tuple<Socket, Socket>> connections = new List<Tuple<Socket, Socket>>();
 	private List<Socket> sockets = new List<Socket>();
 
+
+	//Code to be place in a MonoBehaviour with a GraphicRaycaster component
+	private GraphicRaycaster gr;
+
+
+	// Use this for initialization
+	void Start () {
+		sockets = GetComponentsInChildren<Socket> ().OfType<Socket> ().ToList ();
+		gr = this.GetComponent<GraphicRaycaster> ();	
+	}
+
     // -- Interface --
 
 	public bool areSocketsConnected(string a, string b) {
@@ -83,14 +94,10 @@ public class SocketController : MonoBehaviour {
     // -- Private methods --
 
 
-	// Use this for initialization
-	void Start () {
-		sockets = GetComponentsInChildren<Socket> ().OfType<Socket> ().ToList ();
-	}
 
     private void PickUp(Socket socket) {
         mousePlugInstance = (GameObject)Instantiate(plug, new Vector3(), Quaternion.identity);
-        mousePlugInstance.transform.parent = transform;
+		mousePlugInstance.transform.SetParent (transform);
         from = socket;
         from.AddPlug();
         Debug.Log("Picked Up");
@@ -136,12 +143,9 @@ public class SocketController : MonoBehaviour {
         }
     }
 
-	void LineTo(GameObject o1, GameObject o2) {
-		var r = o1.GetComponent<LineRenderer> ();
+	void LineTo(Vector3 p1, Vector3 p2, LineRenderer r) {
 		r.enabled = true;
-		Vector3 p1 = o1.transform.position;
 		p1.z = -15;
-		Vector3 p2 = o2.transform.position;
 		p2.z = -15;
 		Vector3[] positions = { p1, p2 };
 		r.SetPositions(positions);
@@ -163,13 +167,13 @@ public class SocketController : MonoBehaviour {
 		}
 
 		if (isHoldingAPlug()) {
-			GameObject from_o = from.transform.gameObject;
-			GameObject to_o = mousePlugInstance.transform.gameObject;
-			LineTo (from_o, to_o);
+			// Draw line between mouse and plugged socket
+			Vector3 from_o = from.transform.position;
+			Vector3 to_o = mousePlugInstance.GetComponent<Plug> ().getWirePos ();
+			LineTo (from_o, to_o, from.GetComponent<LineRenderer> ());
+
 			if (Input.GetMouseButtonDown (0)) {
 				var mousePos = Input.mousePosition;
-				//Code to be place in a MonoBehaviour with a GraphicRaycaster component
-				GraphicRaycaster gr = this.GetComponent<GraphicRaycaster> ();
 				//Create the PointerEventData with null for the EventSystem
 				PointerEventData ped = new PointerEventData (null);
 				//Set required parameters, in this case, mouse position
@@ -190,7 +194,10 @@ public class SocketController : MonoBehaviour {
 			}
 		}
 		foreach (Tuple<Socket,Socket> connection in connections) {
-			LineTo (connection.First.transform.gameObject,connection.Second.transform.gameObject);
+			var first = connection.First.transform.position;
+			var second = connection.Second.transform.position;
+			LineTo (first,second,connection.First.GetComponent<LineRenderer> ());
 		}
 	}
 }
+
