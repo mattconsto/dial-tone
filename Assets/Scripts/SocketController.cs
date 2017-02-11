@@ -19,8 +19,10 @@ public class Tuple<T1, T2> {
 public class SocketController : MonoBehaviour {
     private Socket from = null;
 
-    public GameObject plug;
-    private GameObject mousePlugInstance = null;
+	public GameObject mousePlug;
+	public GameObject cursor;
+
+	private GameObject mousePlugInstance;
 
 	private List<Tuple<Socket, Socket>> connections = new List<Tuple<Socket, Socket>>();
 	private List<Socket> sockets = new List<Socket>();
@@ -94,21 +96,22 @@ public class SocketController : MonoBehaviour {
     // -- Private methods --
 
 
-
     private void PickUp(Socket socket) {
-        mousePlugInstance = (GameObject)Instantiate(plug, new Vector3(), Quaternion.identity);
-		mousePlugInstance.transform.SetParent (transform);
+		cursor.GetComponent<Image> ().enabled = false;
+		mousePlugInstance = (GameObject)Instantiate(mousePlug, transform.position, Quaternion.identity);
+		mousePlugInstance.transform.parent = transform;
         from = socket;
         from.AddPlug();
         Debug.Log("Picked Up");
     }
 
     private void InsertInto(Socket socket) {
-        GameObject.DestroyImmediate(mousePlugInstance);
+		GameObject.DestroyImmediate (mousePlugInstance);
+		cursor.GetComponent<Image> ().enabled = true;
         connections.Add(new Tuple<Socket,Socket>(from, socket));
         socket.AddPlug();
-        from = null;
-        Debug.Log("Inserted");
+		from = null;
+		Debug.Log("Inserted");
     }
 
 	public void setLED(string socket, string color) {
@@ -188,6 +191,7 @@ public class SocketController : MonoBehaviour {
 					ClearLine (from.transform.gameObject);
 					from = null;
 					GameObject.DestroyImmediate (mousePlugInstance);
+					cursor.GetComponent<Image> ().enabled = true;
 				} else {
 					Debug.Log ("You didn't miss");
 				}

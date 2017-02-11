@@ -41,15 +41,8 @@ public class Socket : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		yourButton.onClick.AddListener(TaskOnClick);
+		yourButton.onClick.AddListener ( () => {if (enabled) controller.SocketClick(this);});
 	}
-
-    void TaskOnClick() {
-        if (enabled) {
-			
-            controller.SocketClick(this);
-        }
-    }
 
 	public void setLED(LEDColor color) {
 		var LED = transform.Find("Indicator");
