@@ -93,9 +93,9 @@ public class SocketController : MonoBehaviour {
 		sockets = GetComponentsInChildren<Socket> ().OfType<Socket> ().ToList ();
 	}
 
-    private void StartWiring(Socket socket) {
-        mousePlugInstance = Instantiate(plug, new Vector3(), Quaternion.identity);
-        mousePlugInstance.transform.SetParent(transform);
+    private void PickUp(Socket socket) {
+        mousePlugInstance = (GameObject)Instantiate(plug, new Vector3(), Quaternion.identity);
+        mousePlugInstance.transform.parent = transform;
         from = socket;
         from.AddPlug();
         Debug.Log("Picked Up");

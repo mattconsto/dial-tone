@@ -9,6 +9,7 @@ public class Socket : MonoBehaviour {
     public SocketController controller;
     public GameObject plug = null;
     private GameObject plugInstance = null;
+	public bool markedForUse = false;
 
 
     public bool IsPlugged()
@@ -22,6 +23,8 @@ public class Socket : MonoBehaviour {
         Debug.Log("Plug added");
         plugInstance = Instantiate(plug, transform.position, Quaternion.identity);
         plugInstance.transform.SetParent(transform);
+        plugInstance = (GameObject)Instantiate(plug, transform.position, Quaternion.identity);
+        plugInstance.transform.parent = transform;
         Plug plugScript = plugInstance.GetComponent<Plug>();
         plugScript.enabled = false;
     }
@@ -30,6 +33,7 @@ public class Socket : MonoBehaviour {
     {
         Debug.Log("Removeplug");
         GameObject.DestroyImmediate(plugInstance);
+		markedForUse = false;
     }
 
     // Use this for initialization
