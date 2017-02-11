@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Tuple<T1, T2> {
     public T1 First { get; private set; }
@@ -152,17 +154,20 @@ public class SocketController : MonoBehaviour {
 			if( Input.GetMouseButtonDown(0) )
 			{
 				var mousePos = Input.mousePosition;
-				Vector3 origin = Camera.main.ScreenToWorldPoint (new Vector3 (mousePos.x, mousePos.y, 14));
-				origin.z = 100;
-				Ray ray = new Ray (origin, new Vector3 (0, 0, -1));
-				Debug.Log (ray.origin);
-				Debug.Log (ray.direction);
-				Debug.DrawRay (ray.origin, ray.origin + ray.direction * 1000);
-				RaycastHit hit;
-				if (Physics.Raycast(ray, out hit, 1000)) {
-					Debug.Log (hit.transform.gameObject.name);
+				//Code to be place in a MonoBehaviour with a GraphicRaycaster component
+				GraphicRaycaster gr = this.GetComponent<GraphicRaycaster>();
+				//Create the PointerEventData with null for the EventSystem
+				PointerEventData ped = new PointerEventData(null);
+				//Set required parameters, in this case, mouse position
+				ped.position = Input.mousePosition;
+				//Create list to receive all results
+				List<RaycastResult> results = new List<RaycastResult>();
+				//Raycast it
+				gr.Raycast(ped, results);
+				if (results.Count == 0) {
+					Debug.Log ("YOU MISSED");
 				} else {
-					Debug.Log ("Hit nothing");
+					Debug.Log ("You didn't miss");
 				}
 			}
 			GameObject from_o = from.transform.gameObject;
