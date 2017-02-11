@@ -43,6 +43,7 @@ public class Socket : MonoBehaviour {
     // Use this for initialization
     void Start () {
 		yourButton.onClick.AddListener ( () => {if (enabled) controller.SocketClick(this);});
+		GetComponentInChildren<Text> ().text = gameObject.name;
 	}
 
 	public void setLED(LEDColor color) {
