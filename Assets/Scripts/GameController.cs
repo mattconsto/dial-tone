@@ -75,19 +75,19 @@ public class GameController : MonoBehaviour {
 				curconv = loader.getNextConversation();
 				StartCoroutine(sendConversation());
 				inconversation = true;
-				sockControl.setLED (pending.incomingPort, "GREEN");
+				sockControl.setLED (calls[i].incomingPort, "GREEN");
 				sockControl.setLED ("operator", "GREEN");
 			}
 			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name==calls[i].targetPort)
 			{
 				calls[i].connected = true;
-				sockControl.setLED (pending.incomingPort, "GREEN");
-				sockControl.setLED (pending.targetPort, "GREEN");
+				sockControl.setLED (calls[i].incomingPort, "GREEN");
+				sockControl.setLED (calls[i].targetPort, "GREEN");
 			}
 			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name!=calls[i].targetPort)
 			{
 				//DROP CALL
-				sockControl.setLED (pending.incomingPort, "BLACK");
+				sockControl.setLED (calls[i].incomingPort, "BLACK");
 				calls.RemoveAt(i);
 			}
 			else if(calls[i].connected)
@@ -95,8 +95,8 @@ public class GameController : MonoBehaviour {
 				calls[i].timeLeft -= deltaTime;
 				if(calls[i].timeLeft < 0)
 				{
-					sockControl.setLED (pending.incomingPort, "BLACK");
-					sockControl.setLED (pending.targetPort, "BLACK");
+					sockControl.setLED (calls[i].incomingPort, "BLACK");
+					sockControl.setLED (calls[i].targetPort, "BLACK");
 					calls.RemoveAt(i);
 				}
 			}
