@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 4ded4fa80d2315c4eb222d5dd10a9866
+timeCreated: 1486820176
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: MKR17
+  fontNames:
+  - MKR17
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
