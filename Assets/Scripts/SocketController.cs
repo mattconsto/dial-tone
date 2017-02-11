@@ -145,6 +145,22 @@ public class SocketController : MonoBehaviour {
 			ClearLine (socket.transform.gameObject);
 		}
 		if (isHoldingAPlug()) {
+			if( Input.GetMouseButtonDown(0) )
+			{
+				var mousePos = Input.mousePosition;
+				Vector3 origin = Camera.main.ScreenToWorldPoint (new Vector3 (mousePos.x, mousePos.y, 14));
+				origin.z = 100;
+				Ray ray = new Ray (origin, new Vector3 (0, 0, -1));
+				Debug.Log (ray.origin);
+				Debug.Log (ray.direction);
+				Debug.DrawRay (ray.origin, ray.origin + ray.direction * 1000);
+				RaycastHit hit;
+				if (Physics.RaycastAll (ray, out hit, 1000)) {
+					Debug.Log (hit.transform.gameObject.name);
+				} else {
+					Debug.Log ("Hit nothing");
+				}
+			}
 			GameObject from_o = from.transform.gameObject;
 			GameObject to_o = mousePlugInstance.transform.gameObject;
 			LineTo (from_o, to_o);

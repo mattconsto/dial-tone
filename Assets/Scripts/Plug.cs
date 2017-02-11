@@ -14,7 +14,7 @@ public class Plug : MonoBehaviour {
 	void Update () {
         if (followMouse) {
             Vector3 mousePos = Input.mousePosition;
-            transform.position = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
+			transform.position = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 14));
         }
     }
     

@@ -20,11 +20,9 @@ public class Socket : MonoBehaviour {
     public void AddPlug()
     {
         // TODO: ID the plugs
-        Debug.Log("Plug added");
+        Debug.Log("Plug added to socket");
         plugInstance = (GameObject)Instantiate(plug, transform.position, Quaternion.identity);
         plugInstance.transform.SetParent(transform);
-        plugInstance = (GameObject)Instantiate(plug, transform.position, Quaternion.identity);
-        plugInstance.transform.parent = transform;
         Plug plugScript = plugInstance.GetComponent<Plug>();
         plugScript.enabled = false;
     }
