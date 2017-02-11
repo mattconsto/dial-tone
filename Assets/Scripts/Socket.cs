@@ -29,6 +29,7 @@ public class Socket : MonoBehaviour {
         plugInstance.transform.SetParent(transform);
         Plug plugScript = plugInstance.GetComponent<Plug>();
         plugScript.enabled = false;
+		setLED (LEDColor.Green);
     }
 
     public void RemovePlug()
@@ -36,6 +37,7 @@ public class Socket : MonoBehaviour {
         Debug.Log("Removeplug");
         GameObject.DestroyImmediate(plugInstance);
 		markedForUse = false;
+		setLED (LEDColor.Off);
     }
 
     // Use this for initialization
@@ -45,7 +47,7 @@ public class Socket : MonoBehaviour {
 
     void TaskOnClick() {
         if (enabled) {
-			setLED (LEDColor.Green);
+			
             controller.SocketClick(this);
         }
     }

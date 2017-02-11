@@ -8,6 +8,7 @@ public class Plug : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Cursor.visible = false;
+		Update ();
     }
 	
 	// Update is called once per frame

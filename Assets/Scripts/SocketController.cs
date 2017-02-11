@@ -161,29 +161,33 @@ public class SocketController : MonoBehaviour {
 		foreach (Socket socket in sockets) {
 			ClearLine (socket.transform.gameObject);
 		}
+
 		if (isHoldingAPlug()) {
-			if( Input.GetMouseButtonDown(0) )
-			{
+			GameObject from_o = from.transform.gameObject;
+			GameObject to_o = mousePlugInstance.transform.gameObject;
+			LineTo (from_o, to_o);
+			if (Input.GetMouseButtonDown (0)) {
 				var mousePos = Input.mousePosition;
 				//Code to be place in a MonoBehaviour with a GraphicRaycaster component
-				GraphicRaycaster gr = this.GetComponent<GraphicRaycaster>();
+				GraphicRaycaster gr = this.GetComponent<GraphicRaycaster> ();
 				//Create the PointerEventData with null for the EventSystem
-				PointerEventData ped = new PointerEventData(null);
+				PointerEventData ped = new PointerEventData (null);
 				//Set required parameters, in this case, mouse position
 				ped.position = Input.mousePosition;
 				//Create list to receive all results
-				List<RaycastResult> results = new List<RaycastResult>();
+				List<RaycastResult> results = new List<RaycastResult> ();
 				//Raycast it
-				gr.Raycast(ped, results);
+				gr.Raycast (ped, results);
 				if (results.Count == 0) {
 					Debug.Log ("YOU MISSED");
+					from.RemovePlug ();
+					ClearLine (from.transform.gameObject);
+					from = null;
+					GameObject.DestroyImmediate (mousePlugInstance);
 				} else {
 					Debug.Log ("You didn't miss");
 				}
 			}
-			GameObject from_o = from.transform.gameObject;
-			GameObject to_o = mousePlugInstance.transform.gameObject;
-			LineTo (from_o, to_o);
 		}
 		foreach (Tuple<Socket,Socket> connection in connections) {
 			LineTo (connection.First.transform.gameObject,connection.Second.transform.gameObject);
