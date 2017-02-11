@@ -10,7 +10,6 @@ public class TextWriter : MonoBehaviour {
 	private float timeElapsed = 0;
 	public bool speaking = false;
 	public Text text;
-	public AudioSource source;
 
 	// Use this for initialization
 	void Start () {
