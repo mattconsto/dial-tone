@@ -25,7 +25,7 @@ public class ConversationLoader {
 	
 	void loadFromFile(ArrayList list, string filename)
 	{
-		Debug.Log ("Started loading "+filename);
+		//Debug.Log ("Started loading "+filename);
 		StringBuilder convstr;
 		StreamReader rdr = new StreamReader (Application.dataPath + "/ConversationFiles/" + filename, Encoding.Default);
 		using(rdr)
@@ -41,7 +41,7 @@ public class ConversationLoader {
 					else
 					{
 						((Conversation)list[list.Count-1]).addSentance(line);
-						Debug.Log("NEWSENTANCE: "+line);
+						//Debug.Log("NEWSENTANCE: "+line);
 						//conversations.Add (new Conversation());
 					}
 
@@ -76,7 +76,7 @@ public class ConversationLoader {
 	{
 		return (Conversation)story [day-1];
 	}
-	void accessData(JSONObject obj){
+	/*void accessData(JSONObject obj){
 		switch(obj.type){
 		case JSONObject.Type.OBJECT:
 			for(int i = 0; i < obj.list.Count; i++){
@@ -98,12 +98,12 @@ public class ConversationLoader {
 			Debug.Log(obj.n);
 			break;
 		case JSONObject.Type.BOOL:
-			Debug.Log(obj.b);
+			//Debug.Log(obj.b);
 			break;
 		case JSONObject.Type.NULL:
-			Debug.Log("NULL");
+		//	Debug.Log("NULL");
 			break;
 			
 		}
-	}
+	}*/
 }

@@ -24,7 +24,7 @@ public class Socket : MonoBehaviour {
     public void AddPlug()
     {
         // TODO: ID the plugs
-        Debug.Log("Plug added to socket");
+      //  Debug.Log("Plug added to socket");
         plugInstance = (GameObject)Instantiate(plug, transform.position, Quaternion.identity);
         plugInstance.transform.SetParent(transform);
         Plug plugScript = plugInstance.GetComponent<Plug>();
@@ -34,7 +34,7 @@ public class Socket : MonoBehaviour {
 
     public void RemovePlug()
     {
-        Debug.Log("Removeplug");
+    //    Debug.Log("Removeplug");
         GameObject.DestroyImmediate(plugInstance);
 		markedForUse = false;
 		setLED (LEDColor.Off);
@@ -43,6 +43,7 @@ public class Socket : MonoBehaviour {
     // Use this for initialization
     void Start () {
 		yourButton.onClick.AddListener(TaskOnClick);
+        GetComponentInChildren<Text>().text = gameObject.name;
 	}
 
     void TaskOnClick() {

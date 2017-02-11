@@ -11,7 +11,9 @@ public class GameController : MonoBehaviour {
 	ConversationLoader loader = new ConversationLoader ();
 	public SocketController sockControl;
 	public TextWriter txtwrite;
+	List<Socket> socketList;
 
+    public int score = 0;
 	int day = 1;
 	int callsToday = 0;
 	int maxCallsToday = 5;
@@ -20,6 +22,7 @@ public class GameController : MonoBehaviour {
 	bool pairReady = false;
 	bool toOperator = false;
 	bool inconversation = false;
+	bool hasInited = false;
 	Conversation curconv;
 	float timeElapsed = 0;
 	float callDelay = 0;
@@ -37,10 +40,18 @@ public class GameController : MonoBehaviour {
 	void Awake()
 	{
 		loader.init ();
+        
 	}
 	void Update()
 	{
-		if (!loader.finishedLoading)
+		if (!hasInited){
+			Debug.Log("INITING SOCKET LIST");
+			Debug.Log("Soceket COunt:"+sockControl.getAllSockets().Count);
+			hasInited = true;
+			socketList = sockControl.getAllSockets().Where(x => x.name != "operator").ToList();
+		}
+      //  Debug.Log("LENGHT" + socketList.Count);
+        if (!loader.finishedLoading)
 			return;
 		//setGameState ();
 		timeElapsed += Time.deltaTime;
@@ -95,16 +106,18 @@ public class GameController : MonoBehaviour {
 			}
 			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name==calls[i].targetPort)
 			{
-				Debug.Log("CONNTECED CORRECTLY");
+                //Debug.Log("CONNTECED CORRECTLY");
+                score++;
 				calls[i].connected = true;
 				sockControl.setLED (calls[i].incomingPort, "GREEN");
 				sockControl.setLED (calls[i].targetPort, "GREEN");
 			}
-			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name!=calls[i].targetPort)
+			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && (sockControl.getConnectedTo(calls[i].incomingPort).name!=calls[i].targetPort && sockControl.getConnectedTo(calls[i].incomingPort).name != "operator"))
 			{
 				//DROP CALL
 				sockControl.setLED (calls[i].incomingPort, "OFF");
 				calls.RemoveAt(i);
+                Debug.Log("Dropped Call");
 			}
 			else if(calls[i].connected)
 			{
@@ -163,7 +176,6 @@ public class GameController : MonoBehaviour {
 			return;
 		pending.incomingPort = socketobj.name;
 		pending.conv = loader.getRandomConversation ();
-		
 		//Display the input socket as lit up
 		sockControl.setLED (pending.incomingPort, "RED");
 		//tell andy code to listen for connection
@@ -172,9 +184,7 @@ public class GameController : MonoBehaviour {
 	}
 	Socket getAvailablePort()
 	{
-		List<Socket> list = sockControl.getAllSockets ();
-		
-		var result = list.OrderBy(item => Random.Range(-1,1));
+		var result = socketList.OrderBy(item => Random.Range(-1,1));
 		foreach (Socket sock in result) {
 			if(!sock.markedForUse)
 			{
