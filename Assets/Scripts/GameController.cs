@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameController : MonoBehaviour {
 
@@ -20,6 +21,8 @@ public class GameController : MonoBehaviour {
 	bool toOperator = false;
 	bool inconversation = false;
 	Conversation curconv;
+	float timeElapsed = 0;
+	float callDelay = 0;
 
 	enum GAMESTATE {START, DRIVE, INTRO,INTRO_INCALL,DAY,DAY_WAITINGONCONNECT}
 	GAMESTATE gamestate = GAMESTATE.START;
@@ -40,19 +43,26 @@ public class GameController : MonoBehaviour {
 		if (!loader.finishedLoading)
 			return;
 		//setGameState ();
-		manageCalls ();
+		timeElapsed += Time.deltaTime;
+		if(timeElapsed >= callDelay)
+		{
+			//Debug.Log(timeElapsed);
+			manageCalls ();
+			callDelay = Random.Range(betweenCalls_MIN,betweenCalls_MAX);
+		}
 		manageConnections (Time.deltaTime);
 	}
 	void manageCalls()
 	{
 		if (day == 1) {
+			timeElapsed = 0;
 			//at 3 semi-random times start a new pending (Flashing LED > OP > CONN)
-			float t = Random.Range(betweenCalls_MIN,betweenCalls_MAX);
-			for(int i=0;i<3;i++)
-			{
-				Invoke("startNewPair",t);
-				t+=Random.Range(betweenCalls_MIN,betweenCalls_MAX);
-			}
+			//for(int i=0;i<3;i++)
+			//{
+				//Invoke("startNewPair",t);
+				startNewPair();
+				//t+=Random.Range(betweenCalls_MIN,betweenCalls_MAX);
+			//}
 
 		}
 	}
@@ -66,15 +76,18 @@ public class GameController : MonoBehaviour {
 				//if this is the story, display the story text instead
 		//else
 			//don't display call unless tapped
-
+		//Debug.Log("MANAGING()");
 		for (int i=0; i<calls.Count; i++) {
-			if(!calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort).name=="operator" && !inconversation)
+			if(sockControl.getConnectedTo(calls[i].incomingPort)!=null)
+				Debug.Log("ID:"+i+"PORT:"+calls[i].incomingPort+" connected to "+sockControl.getConnectedTo(calls[i].incomingPort).name+" Target:"+calls[i].targetPort);
+			if(!calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort)!=null && sockControl.getConnectedTo(calls[i].incomingPort).name=="operator" && !inconversation)
 			{
+				//Debug.Log("CONNTECED CORRECTLY");
 				calls[i].spokenToOperator = true;
 				//get operator[story] conversation next & display
 				curconv = loader.getNextConversation();
-				curconv.getNextSentance().content = string.Format(curconv.getNextSentance().content,calls[i].targetPort);
-				curconv.reset();
+				curconv.setFormatter(calls[i].targetPort);
+				Debug.Log("targetPort::"+calls[i].targetPort);
 				StartCoroutine(sendConversation());
 				inconversation = true;
 				sockControl.setLED (calls[i].incomingPort, "GREEN");
@@ -82,6 +95,7 @@ public class GameController : MonoBehaviour {
 			}
 			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name==calls[i].targetPort)
 			{
+				Debug.Log("CONNTECED CORRECTLY");
 				calls[i].connected = true;
 				sockControl.setLED (calls[i].incomingPort, "GREEN");
 				sockControl.setLED (calls[i].targetPort, "GREEN");
@@ -89,7 +103,7 @@ public class GameController : MonoBehaviour {
 			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name!=calls[i].targetPort)
 			{
 				//DROP CALL
-				sockControl.setLED (calls[i].incomingPort, "BLACK");
+				sockControl.setLED (calls[i].incomingPort, "OFF");
 				calls.RemoveAt(i);
 			}
 			else if(calls[i].connected)
@@ -97,8 +111,8 @@ public class GameController : MonoBehaviour {
 				calls[i].timeLeft -= deltaTime;
 				if(calls[i].timeLeft < 0)
 				{
-					sockControl.setLED (calls[i].incomingPort, "BLACK");
-					sockControl.setLED (calls[i].targetPort, "BLACK");
+					sockControl.setLED (calls[i].incomingPort, "OFF");
+					sockControl.setLED (calls[i].targetPort, "OFF");
 					calls.RemoveAt(i);
 				}
 			}
@@ -110,6 +124,7 @@ public class GameController : MonoBehaviour {
 	IEnumerator sendConversation()
 	{
 		bool hasnext = curconv.hasNextSentance ();
+		Debug.Log("HasNext: "+hasnext);
 		while(hasnext)
 		{
 			if(!txtwrite.speaking)
@@ -117,11 +132,14 @@ public class GameController : MonoBehaviour {
 				SentanceObject sent = curconv.getNextSentance();
 				hasnext = curconv.hasNextSentance ();
 				Debug.Log("[Story]"+sent.content);
+				//curconv.getNextSentance().content = string.Format(curconv.getNextSentance().content,curconv.t);
+				//curconv.reset();
 				txtwrite.Say(sent.content,sent.textColor,sent.Alignment);
 			}
 			yield return new WaitForFixedUpdate();
 		}
 		inconversation = false;
+		Debug.Log("NO LONGER IN CONVERSATION");
 	}
 	void startNewPair()
 	{	
@@ -150,11 +168,14 @@ public class GameController : MonoBehaviour {
 		sockControl.setLED (pending.incomingPort, "RED");
 		//tell andy code to listen for connection
 		
+		calls.Add(pending);
 	}
 	Socket getAvailablePort()
 	{
 		List<Socket> list = sockControl.getAllSockets ();
-		foreach (Socket sock in list) {
+		
+		var result = list.OrderBy(item => Random.Range(-1,1));
+		foreach (Socket sock in result) {
 			if(!sock.markedForUse)
 			{
 				sock.markedForUse = true;

@@ -8,14 +8,20 @@ public class Conversation {
 	public Color person1;
 	public Color person2;
 	bool isperson1 = true;
+	string formatter;
 
 	public void addSentance(string str)
 	{
-		Debug.Log ("ConvCount:" + sentances.Count);
 		sentances.Add (str);
+		//Debug.Log ("ConvCount:" + sentances.Count);
+		//Debug.Log("add()"+str);
 		//sentances[sentances.Count] = str;
 	}
 
+	public void setFormatter(string formatter){
+		this.formatter = formatter;
+	}
+	
 	public bool hasNextSentance()
 	{
 		return sentance < sentances.Count;
@@ -25,7 +31,7 @@ public class Conversation {
 		string str = (string)sentances [sentance];
 		sentance++;
 		SentanceObject obj = new SentanceObject ();
-		obj.content = str;
+		obj.content = string.Format(str, formatter);
 		if (isperson1) {
 			obj.textColor = person1;
 			obj.Alignment = "left";

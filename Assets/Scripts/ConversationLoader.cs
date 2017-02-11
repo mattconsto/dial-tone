@@ -16,9 +16,9 @@ public class ConversationLoader {
 	public void init()
 	{
 		loadFromFile(conversations,"convo.txt");
-		loadFromFile(drives,"drive.txt");
+		//loadFromFile(drives,"drive.txt");
 		//loadFromFile(requests,"request.txt");
-		loadFromFile(story,"story.txt");
+		loadFromFile(story,"operator.txt");
 		finishedLoading = true;
 		Debug.Log ("Finished loading");
 	}
@@ -41,7 +41,8 @@ public class ConversationLoader {
 					else
 					{
 						((Conversation)list[list.Count-1]).addSentance(line);
-						conversations.Add (new Conversation());
+						Debug.Log("NEWSENTANCE: "+line);
+						//conversations.Add (new Conversation());
 					}
 
 				}
@@ -52,8 +53,10 @@ public class ConversationLoader {
 	}
 	public Conversation getNextConversation()
 	{
-		return (Conversation)story [storyProgression];
+		Conversation toreturn = (Conversation)story [storyProgression];
+		toreturn.reset();
 		storyProgression++;
+		return toreturn;
 	}
 	public Conversation getRandomConversation()
 	{

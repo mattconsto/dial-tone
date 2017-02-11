@@ -5,15 +5,14 @@ using UnityEngine.UI;
 
 public class TextWriter : MonoBehaviour {
 
-	private string toWrite;
-	public int cps;
+	private string toWrite = "";
+	public int cps = 20;
 	private float timeElapsed = 0;
 	public bool speaking = false;
 	public Text text;
 
 	// Use this for initialization
 	void Start () {
-		Say ("testing, testing, testing", Color.red, "right");
 	}
 
 	public bool Say (string toSay, Color colour, string alignment) {
@@ -22,7 +21,7 @@ public class TextWriter : MonoBehaviour {
 			toWrite = toSay;
 			timeElapsed = 0f;
 			text.text = "";
-			text.color = colour;
+			//text.color = colour;
 			if (alignment == "left") {
 				text.alignment = TextAnchor.UpperLeft;
 			}
