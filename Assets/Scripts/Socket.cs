@@ -21,7 +21,7 @@ public class Socket : MonoBehaviour {
     {
         // TODO: ID the plugs
         Debug.Log("Plug added");
-        plugInstance = Instantiate(plug, transform.position, Quaternion.identity);
+        plugInstance = (GameObject)Instantiate(plug, transform.position, Quaternion.identity);
         plugInstance.transform.SetParent(transform);
         plugInstance = (GameObject)Instantiate(plug, transform.position, Quaternion.identity);
         plugInstance.transform.parent = transform;
