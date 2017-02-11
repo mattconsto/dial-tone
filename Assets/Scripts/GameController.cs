@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour {
 	List<PendingConnection> calls = new List<PendingConnection>();
 	bool pairReady = false;
 	bool toOperator = false;
+	bool inconversation = false;
+	Conversation curconv;
 
 	enum GAMESTATE {START, DRIVE, INTRO,INTRO_INCALL,DAY,DAY_WAITINGONCONNECT}
 	GAMESTATE gamestate = GAMESTATE.START;
@@ -66,15 +68,13 @@ public class GameController : MonoBehaviour {
 			//don't display call unless tapped
 
 		for (int i=0; i<calls.Count; i++) {
-			if(!calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort).name=="operator")
+			if(!calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort).name=="operator" && !inconversation)
 			{
 				calls[i].spokenToOperator = true;
 				//get operator[story] conversation next & display
-				Conversation curconv = loader.getNextConversation();
-				while(curconv.hasNextSentance())
-				{
-					Debug.Log("[Story]"+curconv.getNextSentance().content);
-				}
+				curconv = loader.getNextConversation();
+				StartCoroutine(sendConversation());
+				inconversation = true;
 			}
 			else
 			{
@@ -86,6 +86,16 @@ public class GameController : MonoBehaviour {
 
 		//Mark the target port as unavailable
 
+	}
+	IEnumerator sendConversation()
+	{
+		while(curconv.hasNextSentance())
+		{
+			Debug.Log("[Story]"+curconv.getNextSentance().content);
+
+			return new WaitforSeconds(0.1);
+		}
+		inconversation = false;
 	}
 	void startNewPair()
 	{	
@@ -113,7 +123,6 @@ public class GameController : MonoBehaviour {
 		//Display the input socket as lit up
 		
 		//tell andy code to listen for connection
-		sockControl.addListenerForSocketsConnected (pending.incomingPort, pending.targetPort);
 		
 	}
 	Socket getAvailablePort()
