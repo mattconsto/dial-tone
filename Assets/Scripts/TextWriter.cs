@@ -15,8 +15,8 @@ public class TextWriter : MonoBehaviour {
 	void Start () {
 	}
 
-	public bool Say (string toSay, Color colour, string alignment) {
-		if (!speaking) {
+	public bool Say (string toSay, Color colour, string alignment, bool overwrite=false) {
+		if (!speaking || overwrite) {
 			speaking = true;
 			toWrite = toSay;
 			timeElapsed = 0f;

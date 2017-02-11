@@ -36,7 +36,7 @@ public class Socket : MonoBehaviour {
     {
     //    Debug.Log("Removeplug");
         GameObject.DestroyImmediate(plugInstance);
-		markedForUse = false;
+		//markedForUse = false;
 		setLED (LEDColor.Off);
     }
 

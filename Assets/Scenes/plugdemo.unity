@@ -331,6 +331,12 @@ Prefab:
       propertyPath: controller
       value: 
       objectReference: {fileID: 1490636461}
+    - target: {fileID: 114925238600855932, guid: fc986470f69026e4fb6237a951a386c2,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 183f94709f0448f469303f822eeb5bb4,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fc986470f69026e4fb6237a951a386c2, type: 2}
   m_IsPrefabParent: 0
@@ -581,6 +587,7 @@ MonoBehaviour:
   betweenCalls_MAX: 5
   sockControl: {fileID: 1490636461}
   txtwrite: {fileID: 1980224827}
+  score: 0
 --- !u!4 &1162630965
 Transform:
   m_ObjectHideFlags: 0

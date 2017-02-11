@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour {
 	Conversation curconv;
 	float timeElapsed = 0;
 	float callDelay = 0;
+    bool opConnected = false;
 
 	enum GAMESTATE {START, DRIVE, INTRO,INTRO_INCALL,DAY,DAY_WAITINGONCONNECT}
 	GAMESTATE gamestate = GAMESTATE.START;
@@ -103,6 +104,7 @@ public class GameController : MonoBehaviour {
 				inconversation = true;
 				sockControl.setLED (calls[i].incomingPort, "GREEN");
 				sockControl.setLED ("operator", "GREEN");
+                opConnected = true;
 			}
 			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name==calls[i].targetPort)
 			{
@@ -116,7 +118,9 @@ public class GameController : MonoBehaviour {
 			{
 				//DROP CALL
 				sockControl.setLED (calls[i].incomingPort, "OFF");
-				calls.RemoveAt(i);
+                sockControl.getSocket(calls[i].incomingPort).markedForUse = false;
+                sockControl.getSocket(calls[i].targetPort).markedForUse = false;
+                calls.RemoveAt(i);
                 Debug.Log("Dropped Call");
 			}
 			else if(calls[i].connected)
@@ -128,7 +132,23 @@ public class GameController : MonoBehaviour {
 					sockControl.setLED (calls[i].targetPort, "OFF");
 					calls.RemoveAt(i);
 				}
+                else
+                {
+                    if(sockControl.getConnectedTo(calls[i].incomingPort) == null)
+                    {
+                        sockControl.setLED(calls[i].incomingPort, "OFF");
+                        sockControl.setLED(calls[i].targetPort, "OFF");
+                        sockControl.getSocket(calls[i].incomingPort).markedForUse = false;
+                        sockControl.getSocket(calls[i].targetPort).markedForUse = false;
+                        calls.RemoveAt(i);
+                    }
+                }
 			}
+            if(opConnected && sockControl.getConnectedTo("operator") == null)
+            {
+                opConnected = false;
+                txtwrite.Say("[Disconnected]",new Color(),"left",true);
+            }
 		}
 
 		//Display the LED for the incoming call
