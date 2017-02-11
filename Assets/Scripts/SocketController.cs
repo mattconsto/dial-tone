@@ -107,7 +107,7 @@ public class SocketController : MonoBehaviour {
     private void PickUp(Socket socket) {
 		cursor.GetComponent<Image> ().enabled = false;
 		mousePlugInstance = (GameObject)Instantiate(mousePlug, transform.position, Quaternion.identity);
-		mousePlugInstance.transform.parent = transform;
+		mousePlugInstance.transform.SetParent(transform);
         from = socket;
         from.AddPlug();
         Debug.Log("Picked Up");
