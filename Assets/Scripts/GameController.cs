@@ -79,10 +79,15 @@ public class GameController : MonoBehaviour {
 			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name==calls[i].targetPort)
 			{
 				calls[i].connected = true;
+				Invoke(calls[i].endCall(),10f);
 			}
 			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name!=calls[i].targetPort)
 			{
 				//DROP CALL
+				calls.RemoveAt(i);
+			}
+			else if(calls[i].callEnded)
+			{
 				calls.RemoveAt(i);
 			}
 		}
