@@ -73,6 +73,8 @@ public class GameController : MonoBehaviour {
 				calls[i].spokenToOperator = true;
 				//get operator[story] conversation next & display
 				curconv = loader.getNextConversation();
+				curconv.getNextSentance().content = string.Format(curconv.getNextSentance().content,calls[i].targetPort);
+				curconv.reset();
 				StartCoroutine(sendConversation());
 				inconversation = true;
 				sockControl.setLED (calls[i].incomingPort, "GREEN");
@@ -115,7 +117,7 @@ public class GameController : MonoBehaviour {
 				SentanceObject sent = curconv.getNextSentance();
 				hasnext = curconv.hasNextSentance ();
 				Debug.Log("[Story]"+sent.content);
-				txtwrite.Say(string.Format(sent.content,sent.targetPort),sent.textColor,sent.Alignment);
+				txtwrite.Say(sent.content,sent.textColor,sent.Alignment);
 			}
 			yield return new WaitForFixedUpdate();
 		}
