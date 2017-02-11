@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Tuple<T1, T2>
-{
+public class Tuple<T1, T2> {
     public T1 First { get; private set; }
     public T2 Second { get; private set; }
     internal Tuple(T1 first, T2 second)
@@ -14,8 +13,7 @@ public class Tuple<T1, T2>
     }
 }
 
-public class TupleList<T1, T2> : List<Tuple<T1, T2>>
-{
+public class TupleList<T1, T2> : List<Tuple<T1, T2>> {
     public void Add(T1 item, T2 item2)
     {
         Add(new Tuple<T1, T2>(item, item2));
@@ -27,8 +25,9 @@ public class SocketController : MonoBehaviour {
     private Socket from = null;
 
     public GameObject plug;
-    private GameObject fromPlugInstance = null;
     private GameObject mousePlugInstance = null;
+
+    private TupleList<Socket, Socket> connections = new TupleList<Socket, Socket>();
 
 
     // -- Interface --
@@ -49,13 +48,13 @@ public class SocketController : MonoBehaviour {
     public TupleList<string,string> GetConnectedSockets() {
         return new TupleList<string,string>(); //TODO
         // init code
-        var groceryList = new TupleList<int, string>
-        {
-            { 1, "kiwi" },
-            { 5, "apples" },
-            { 3, "potatoes" },
-            { 1, "tomato" }
-        };
+        //var groceryList = new TupleList<int, string>
+        //{
+        //    { 1, "kiwi" },
+        //    { 5, "apples" },
+        //    { 3, "potatoes" },
+        //    { 1, "tomato" }
+        //};
     }
 
     // -- Private methods --
@@ -68,6 +67,7 @@ public class SocketController : MonoBehaviour {
     }
 
     private void Drop(Socket socket) {
+
         GameObject.DestroyImmediate(mousePlugInstance);
         from = null;
         Debug.Log("Dropped");
@@ -75,7 +75,10 @@ public class SocketController : MonoBehaviour {
 
     public void SocketClick(Socket socket) {
         if (from) {
-            Drop(socket);
+            if (!socket.IsPlugged())
+            {
+                Drop(socket);
+            }
         } else {
             PickUp(socket);
         }
