@@ -25,14 +25,8 @@ public class SocketController : MonoBehaviour {
 
     // -- Interface --
 
-    public bool addListenerForSocketsConnected(string a, string b) {
-		// ROWPOW USE THIS
-		return false;
-    }
-
-	public bool addListenerForSocketsDisconnected(string a, string b) {
-        // ROWPOW USE THIS
-		return false;
+	public bool areSocketsConnected(string a, string b) {
+		return getConnectedTo (getSocket(a)) == getSocket(b);
     }
 
     public Socket getConnectedTo(Socket socket)
@@ -65,8 +59,7 @@ public class SocketController : MonoBehaviour {
 	}
 
     public List<Socket> getAllSockets() {
-        return new List<Socket>();
-        // TODO
+		return sockets;
     }
 
 	public List<Tuple<string,string>> GetConnectedSockets() {
@@ -123,13 +116,12 @@ public class SocketController : MonoBehaviour {
                 socket.RemovePlug();
 				connectedTo.RemovePlug();
 				RemoveConnection (socket, connectedTo);
-                StartWiring(connectedTo);
+				PickUp(connectedTo);
             } else {
-                StartWiring(socket);
+				PickUp(socket);
             }
         }
     }
-
 
 	void LineTo(GameObject o1, GameObject o2) {
 		var r = o1.GetComponent<LineRenderer> ();
