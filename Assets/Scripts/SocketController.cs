@@ -110,7 +110,7 @@ public class SocketController : MonoBehaviour {
 		mousePlugInstance.transform.SetParent(transform);
         from = socket;
         from.AddPlug();
-        Debug.Log("Picked Up");
+        //Debug.Log("Picked Up");
     }
 
     private void InsertInto(Socket socket) {
@@ -145,7 +145,7 @@ public class SocketController : MonoBehaviour {
         } else {
             if (socket.IsPlugged())
             {
-				Debug.Log ("Disconnected");
+			//	Debug.Log ("Disconnected");
 				var connectedTo = getConnectedTo(socket);
                 socket.RemovePlug();
 				connectedTo.RemovePlug();
@@ -197,14 +197,14 @@ public class SocketController : MonoBehaviour {
 				//Raycast it
 				gr.Raycast (ped, results);
 				if (results.Count == 0) {
-					Debug.Log ("YOU MISSED");
+				//	Debug.Log ("YOU MISSED");
 					from.RemovePlug ();
 					ClearLine (from.transform.gameObject);
 					from = null;
 					GameObject.DestroyImmediate (mousePlugInstance);
 					cursor.GetComponent<Image> ().enabled = true;
 				} else {
-					Debug.Log ("You didn't miss");
+				//	Debug.Log ("You didn't miss");
 				}
 			}
 		}
