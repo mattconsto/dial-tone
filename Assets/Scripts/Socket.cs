@@ -12,7 +12,8 @@ public class Socket : MonoBehaviour {
 	public GameObject plug = null;
 	public GameObject insertedPlug = null;
     private GameObject plugInstance = null;
-	public bool markedForUse = false;
+	public bool locked = false;
+	public bool markedForUse;
 	public Sprite LED_OFF;
 	public Sprite LED_GREEN;
 	public Sprite LED_RED;
@@ -34,8 +35,8 @@ public class Socket : MonoBehaviour {
     public void RemovePlug()
     {
         Debug.Log("Removeplug");
-        GameObject.DestroyImmediate(plugInstance);
 		markedForUse = false;
+        GameObject.DestroyImmediate(plugInstance);
 		setLED (LEDColor.Off);
     }
 

@@ -79,7 +79,15 @@ public class SocketController : MonoBehaviour {
 
 	public List<Tuple<string,string>> GetConnectedSockets() {
 		return (from c in connections select new Tuple<string,string>(c.First.name,c.Second.name)).ToList();
-    }
+	}
+
+	public void UnlockSocket(string socket) {
+		getSocket(socket).locked = false;
+	}
+
+	public void LockSocket(string socket) {
+		getSocket(socket).locked = true;
+	}
 
 	public void RemoveConnection(Socket s1, Socket s2) {
 		List<Tuple<Socket,Socket>> toRemove = new List<Tuple<Socket, Socket>> ();
@@ -126,6 +134,9 @@ public class SocketController : MonoBehaviour {
 	}
 
     public void SocketClick(Socket socket) {
+		if (socket.locked) {
+			return;
+		}
 		if (isHoldingAPlug()) {
             if (!socket.IsPlugged())
             {
