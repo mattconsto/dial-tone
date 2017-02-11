@@ -75,27 +75,34 @@ public class GameController : MonoBehaviour {
 				curconv = loader.getNextConversation();
 				StartCoroutine(sendConversation());
 				inconversation = true;
+				sockControl.setLED (pending.incomingPort, "GREEN");
+				sockControl.setLED ("operator", "GREEN");
 			}
 			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name==calls[i].targetPort)
 			{
 				calls[i].connected = true;
+				sockControl.setLED (pending.incomingPort, "GREEN");
+				sockControl.setLED (pending.targetPort, "GREEN");
 			}
 			else if(calls[i].spokenToOperator && sockControl.getConnectedTo(calls[i].incomingPort) != null && sockControl.getConnectedTo(calls[i].incomingPort).name!=calls[i].targetPort)
 			{
 				//DROP CALL
+				sockControl.setLED (pending.incomingPort, "BLACK");
 				calls.RemoveAt(i);
 			}
 			else if(calls[i].connected)
 			{
 				calls[i].timeLeft -= deltaTime;
 				if(calls[i].timeLeft < 0)
+				{
+					sockControl.setLED (pending.incomingPort, "BLACK");
+					sockControl.setLED (pending.targetPort, "BLACK");
 					calls.RemoveAt(i);
+				}
 			}
 		}
 
 		//Display the LED for the incoming call
-
-		//Mark the target port as unavailable
 
 	}
 	IEnumerator sendConversation()
@@ -107,7 +114,7 @@ public class GameController : MonoBehaviour {
 			{
 				SentanceObject sent = curconv.getNextSentance();
 				Debug.Log("[Story]"+sent.content);
-				txtwrite.Say(sent.content,sent.textColor,sent.Alignment);
+				txtwrite.Say(string.Format(sent.content,sent.targetPort),sent.textColor,sent.Alignment);
 			}
 			yield return new WaitForFixedUpdate();
 		}
@@ -137,7 +144,7 @@ public class GameController : MonoBehaviour {
 		pending.conv = loader.getRandomConversation ();
 		
 		//Display the input socket as lit up
-		
+		sockControl.setLED (pending.incomingPort, "RED");
 		//tell andy code to listen for connection
 		
 	}
