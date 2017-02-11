@@ -5,11 +5,15 @@ using UnityEngine.UI;
 
 
 public class Socket : MonoBehaviour {
+	public enum LEDColor {Red, Green, Off};
 	public Button yourButton;
     public SocketController controller;
     public GameObject plug = null;
     private GameObject plugInstance = null;
 	public bool markedForUse = false;
+	public Sprite LED_OFF;
+	public Sprite LED_GREEN;
+	public Sprite LED_RED;
 
 
     public bool IsPlugged()
@@ -41,8 +45,25 @@ public class Socket : MonoBehaviour {
 
     void TaskOnClick() {
         if (enabled) {
+			setLED (LEDColor.Green);
             controller.SocketClick(this);
         }
     }
 
+	void setLED(LEDColor color) {
+		var LED = transform.Find("Indicator");
+		Image image = LED.GetComponent<Image> ();
+		if (color == LEDColor.Green) {
+			image.sprite = LED_GREEN;
+		} else if (color == LEDColor.Red) {
+			image.sprite = LED_RED;
+		} else if (color == LEDColor.Off) {
+			image.sprite = LED_OFF;
+		}
+	}
+		
+
+	void Update() {
+		
+	}
 }

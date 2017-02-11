@@ -102,6 +102,10 @@ public class SocketController : MonoBehaviour {
         Debug.Log("Inserted");
     }
 
+	public void setLED(string socket, string colour) {
+		Socket s = getSocket (socket);
+	}
+
     public void SocketClick(Socket socket) {
 		if (isHoldingAPlug()) {
             if (!socket.IsPlugged())
@@ -155,7 +159,7 @@ public class SocketController : MonoBehaviour {
 				Debug.Log (ray.direction);
 				Debug.DrawRay (ray.origin, ray.origin + ray.direction * 1000);
 				RaycastHit hit;
-				if (Physics.RaycastAll (ray, out hit, 1000)) {
+				if (Physics.Raycast(ray, out hit, 1000)) {
 					Debug.Log (hit.transform.gameObject.name);
 				} else {
 					Debug.Log ("Hit nothing");

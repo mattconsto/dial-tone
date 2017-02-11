@@ -115,7 +115,7 @@ public class GameController : MonoBehaviour {
 				SentanceObject sent = curconv.getNextSentance();
 				hasnext = curconv.hasNextSentance ();
 				Debug.Log("[Story]"+sent.content);
-				txtwrite.Say(string.Format(sent.content,sent.targetPort),sent.textColor,sent.Alignment);
+//				txtwrite.Say(string.Format(sent.content,sent.targetPort),sent.textColor,sent.Alignment);
 			}
 			yield return new WaitForFixedUpdate();
 		}
