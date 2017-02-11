@@ -43,6 +43,15 @@ public class GameController : MonoBehaviour {
 		loader.init ();
         
 	}
+
+	void assignNames(){
+		foreach (Socket socket in socketList) {
+			for (int i = 0; i < 3; i++) {
+				socket.addName (loader.getRandomName ());
+			}
+		}
+	}
+
 	void Update()
 	{
 		if (!hasInited){
@@ -50,6 +59,8 @@ public class GameController : MonoBehaviour {
 			Debug.Log("Soceket COunt:"+sockControl.getAllSockets().Count);
 			hasInited = true;
 			socketList = sockControl.getAllSockets().Where(x => x.name != "operator").ToList();
+			assignNames ();
+
 		}
       //  Debug.Log("LENGHT" + socketList.Count);
         if (!loader.finishedLoading)
@@ -98,7 +109,7 @@ public class GameController : MonoBehaviour {
 				calls[i].spokenToOperator = true;
 				//get operator[story] conversation next & display
 				curconv = loader.getNextConversation();
-				curconv.setFormatter(calls[i].targetPort);
+				curconv.setFormatter(sockControl.getSocket(calls[i].targetPort).getRandomName());
 				Debug.Log("targetPort::"+calls[i].targetPort);
 				StartCoroutine(sendConversation());
 				inconversation = true;

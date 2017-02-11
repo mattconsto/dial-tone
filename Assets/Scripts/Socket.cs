@@ -10,11 +10,26 @@ public class Socket : MonoBehaviour {
     public SocketController controller;
     public GameObject plug = null;
     private GameObject plugInstance = null;
+	private ArrayList names = new ArrayList();
 	public bool markedForUse = false;
 	public Sprite LED_OFF;
 	public Sprite LED_GREEN;
 	public Sprite LED_RED;
 
+
+	public string getRandomName(){
+		int i =  (int) (Random.value * 100) % names.Count;
+		return (string) names [i];
+	}
+
+	public void addName(string name){
+		names.Add (name);
+	}
+
+	public string[] getNames(){
+		return (string[]) names.ToArray();
+	}
+	
 
     public bool IsPlugged()
     {
