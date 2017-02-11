@@ -36,3 +36,5 @@ sysinfo.txt
 
 #Photoshop
 *.psd
+
+*.psd.meta
