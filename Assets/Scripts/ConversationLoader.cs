@@ -19,12 +19,6 @@ public class ConversationLoader : MonoBehaviour {
 	{
 		StringBuilder convstr;
 		StreamReader rdr = new StreamReader (Application.dataPath + "/ConversationFiles/" + filename, Encoding.Default);
-	}
-	
-	void loadFromFile()
-	{
-		StringBuilder convstr;
-		StreamReader rdr = new StreamReader(Application.dataPath+"/ConversationFiles/convo.txt",Encoding.Default);
 		using(rdr)
 		{
 			string line;
@@ -60,7 +54,7 @@ public class ConversationLoader : MonoBehaviour {
 	public Conversation getRequest()
 	{
 		return (Conversation)requests [0];
-
+	}
 	void accessData(JSONObject obj){
 		switch(obj.type){
 		case JSONObject.Type.OBJECT:
