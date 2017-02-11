@@ -102,8 +102,15 @@ public class SocketController : MonoBehaviour {
         Debug.Log("Inserted");
     }
 
-	public void setLED(string socket, string colour) {
+	public void setLED(string socket, string color) {
 		Socket s = getSocket (socket);
+		if (color == "RED") { 
+			s.setLED (Socket.LEDColor.Red);
+		} else if (color == "GREEN") { 
+			s.setLED(Socket.LEDColor.Green);
+		} else if (color == "OFF") { 
+			s.setLED(Socket.LEDColor.Off);
+		}
 	}
 
     public void SocketClick(Socket socket) {

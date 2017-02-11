@@ -50,7 +50,7 @@ public class Socket : MonoBehaviour {
         }
     }
 
-	void setLED(LEDColor color) {
+	public void setLED(LEDColor color) {
 		var LED = transform.Find("Indicator");
 		Image image = LED.GetComponent<Image> ();
 		if (color == LEDColor.Green) {
