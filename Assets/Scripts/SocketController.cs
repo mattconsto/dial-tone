@@ -125,6 +125,9 @@ public class SocketController : MonoBehaviour {
 
     private Socket getConnectedTo(Socket socket)
     {
+		if (socket == null) {
+			return null;
+		}
         foreach (Tuple<Socket,Socket> connection in connections)
         {
             if (connection.First == socket)
@@ -273,18 +276,20 @@ public class SocketController : MonoBehaviour {
 			ClearLine (socket.transform.gameObject);
 		}
 
-		Socket connA = getConnectedTo (tapASocket);
-		Socket connB = getConnectedTo (tapBSocket);
-		Socket.LEDColor color = Socket.LEDColor.Off;
-		if (connA != null) {
-			color = connA.liveColor;
-			Debug.Log (color);
-		} else if (connB != null) {
-			color = connB.liveColor;
-			Debug.Log (color);
+		if (tapASocket && tapBSocket) {
+			Socket connA = getConnectedTo (tapASocket);
+			Socket connB = getConnectedTo (tapBSocket);
+			Socket.LEDColor color = Socket.LEDColor.Off;
+			if (connA != null) {
+				color = connA.liveColor;
+				Debug.Log (color);
+			} else if (connB != null) {
+				color = connB.liveColor;
+				Debug.Log (color);
+			}
+			tapASocket.setLED (color);
+			tapBSocket.setLED (color);
 		}
-		tapASocket.setLED (color);
-		tapBSocket.setLED (color);
 
 		if (isHoldingAPlug()) {
 			// Draw line between mouse and plugged socket
