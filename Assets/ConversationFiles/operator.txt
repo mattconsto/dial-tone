@@ -1,18 +1,28 @@
 ***
 Hello, can you connect me to {0}, please.
+Sure
 ***
 Good Day, I'd like to be connected to {0} please.
+Sure
 ***
 Hi, I need to speak to {0}.
+Sure
 ***
 Connect me to {0}, NOW!
+Sure
 ***
 I need to talk to {0}, get me connected.
+Sure
 ***
 Get me connected to {0}. It's urgent.
+Sure
 ***
 {0}, please.
-***
-{0}, {0}, {0}. I need to talk to {0}.
+Sure
 ***
 {0}. Operator, I need {0}
+Sure
+***
+Fucking Hell, get me {0}
+Sure
+***
