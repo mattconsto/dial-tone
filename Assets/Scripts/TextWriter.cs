@@ -7,9 +7,11 @@ public class TextWriter : MonoBehaviour {
 
 	private string toWrite = "";
 	public int cps = 20;
+	public float speakTimeout = 0.5f;
 	private float timeElapsed = 0;
 	public bool speaking = false;
 	public Text text;
+	bool ending = false;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +24,7 @@ public class TextWriter : MonoBehaviour {
 			toWrite = toSay;
 			timeElapsed = 0f;
 			text.text = "";
+			ending = false;
 			//text.color = colour;
 			if (alignment == "left") {
 				text.alignment = TextAnchor.UpperLeft;
@@ -40,10 +43,15 @@ public class TextWriter : MonoBehaviour {
 	void Update () {
 		timeElapsed += Time.deltaTime;
 		text.text = toWrite.Substring (0,Mathf.Min(toWrite.Length, (int)(timeElapsed * cps)));
-		if (text.text == toWrite) {
-			speaking = false;
+		if (!ending && text.text == toWrite) {
+			ending = true;
+			Invoke("stopSpeaking",speakTimeout);
             Debug.Log("Stopped speaking - TextWriter");
 		}
+	}
+	void stopSpeaking()
+	{
+		speaking = false;
 	}
 		
 }

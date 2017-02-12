@@ -223,8 +223,10 @@ public class GameController : MonoBehaviour {
 
 		call.targetPort = socketA;
 		call.incomingPort = socketB;
-		call.operatorConv = loader.getRandomConversation ();
+		call.operatorConv = loader.getRandomOperatorConversation ();
         call.operatorConv.setFormatter(sockControl.getSocket(call.targetPort).getRandomName());
+        
+        call.tappedConv = loader.getRandomTappedConversation();
         //Display the input socket as lit up
         //tell andy code to listen for connection
 
