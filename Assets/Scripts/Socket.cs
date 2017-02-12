@@ -12,8 +12,7 @@ public class Socket : MonoBehaviour {
 	public GameObject insertedPlug = null;
     private GameObject plugInstance = null;
 	public bool locked = false;
-	private ArrayList names = new ArrayList();
-	public bool markedForUse = false;
+	private List<string> names = new List<string>();
 	public Sprite LED_OFF;
 	public Sprite LED_GREEN;
 	public Sprite LED_RED;
@@ -27,10 +26,6 @@ public class Socket : MonoBehaviour {
 		names.Add (name);
 	}
 
-	public string[] getNames(){
-		return (string[]) names.ToArray();
-	}
-
     public bool IsPlugged()
     {
         return plugInstance != null;
@@ -42,15 +37,14 @@ public class Socket : MonoBehaviour {
         Debug.Log("Plug added to socket");
         plugInstance = (GameObject)Instantiate(insertedPlug, transform.position, Quaternion.identity);
         plugInstance.transform.SetParent(transform);
-		setLED (LEDColor.Green);
+//		setLED (LEDColor.Green);
     }
 
     public void RemovePlug()
     {
         Debug.Log("Removeplug");
-		markedForUse = false;
         GameObject.DestroyImmediate(plugInstance);
-		setLED (LEDColor.Off);
+//		setLED (LEDColor.Off);
     }
 
     // Use this for initialization

@@ -396,11 +396,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4035939960523898, guid: fc986470f69026e4fb6237a951a386c2, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -32.4
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 4035939960523898, guid: fc986470f69026e4fb6237a951a386c2, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.9
+      value: -1.4
       objectReference: {fileID: 0}
     - target: {fileID: 4035939960523898, guid: fc986470f69026e4fb6237a951a386c2, type: 2}
       propertyPath: m_LocalPosition.z
@@ -424,7 +424,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4035939960523898, guid: fc986470f69026e4fb6237a951a386c2, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1364899133739490, guid: fc986470f69026e4fb6237a951a386c2, type: 2}
       propertyPath: m_Name
@@ -448,6 +448,16 @@ Prefab:
     - target: {fileID: 4035939960523898, guid: fc986470f69026e4fb6237a951a386c2, type: 2}
       propertyPath: m_LocalScale.y
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 224639836601284704, guid: fc986470f69026e4fb6237a951a386c2,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 133
+      objectReference: {fileID: 0}
+    - target: {fileID: 224639836601284704, guid: fc986470f69026e4fb6237a951a386c2,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -38.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fc986470f69026e4fb6237a951a386c2, type: 2}
@@ -800,7 +810,7 @@ GameObject:
   - component: {fileID: 1093247676}
   - component: {fileID: 1093247675}
   m_Layer: 0
-  m_Name: headphone_set
+  m_Name: operator_set
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -816,13 +826,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 14}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
+  - {fileID: 1557344713}
   - {fileID: 676986076}
   m_Father: {fileID: 1490636460}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 436, y: 185}
+  m_AnchoredPosition: {x: 441, y: 185}
   m_SizeDelta: {x: 100, y: 59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1093247675
@@ -1438,6 +1449,74 @@ Transform:
   m_PrefabParentObject: {fileID: 4035939960523898, guid: fc986470f69026e4fb6237a951a386c2,
     type: 2}
   m_PrefabInternal: {fileID: 1976010278}
+--- !u!1 &1557344712
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1557344713}
+  - component: {fileID: 1557344715}
+  - component: {fileID: 1557344714}
+  m_Layer: 0
+  m_Name: headphone_decal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1557344713
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1557344712}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 100, y: 100, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1093247674}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 16.6, y: 4.3}
+  m_SizeDelta: {x: 0.18, y: 0.17}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1557344714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1557344712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 189191921eb00c14291f77a2c30b4cf8, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1557344715
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1557344712}
 --- !u!1 &1604481469
 GameObject:
   m_ObjectHideFlags: 0

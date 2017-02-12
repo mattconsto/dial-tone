@@ -22,6 +22,11 @@ public class SocketController : MonoBehaviour {
 	public GameObject mousePlug;
 	public GameObject cursor;
 
+	public GameObject bubbleHappy;
+	public GameObject bubbleSad;
+
+	private Dictionary<Socket,int> reservedForCall = new Dictionary<Socket,int>();
+
 	private GameObject mousePlugInstance;
 
 	private List<Tuple<Socket, Socket>> connections = new List<Tuple<Socket, Socket>>();
@@ -32,7 +37,7 @@ public class SocketController : MonoBehaviour {
 	private GraphicRaycaster gr;
 
 
-	// Use this for initialization
+	// Use this for initializationge
 	void Start () {
 		sockets = GetComponentsInChildren<Socket> ().OfType<Socket> ().ToList ();
 		gr = this.GetComponent<GraphicRaycaster> ();	
@@ -40,11 +45,52 @@ public class SocketController : MonoBehaviour {
 
     // -- Interface --
 
+	public void reserveForCall(string socket) {
+		Socket sock = getSocket(socket);
+		if (reservedForCall.ContainsKey (sock)) {
+			reservedForCall [sock] += 1;
+		} else {
+			reservedForCall[sock] = 1;
+		}
+	}
+
+	public void happyAt(string socket) {
+		Socket sock = getSocket(socket);
+		GameObject.Instantiate (bubbleHappy, sock.transform.position + new Vector3(15,25,-50), Quaternion.identity, transform);
+		//TODO some form of scoring
+	}
+	public void sadAt(string socket) {
+		Socket sock = getSocket(socket);
+		GameObject.Instantiate (bubbleSad, sock.transform.position + new Vector3(15,25,-50), Quaternion.identity, transform);
+		//TODO some form of scoring
+	}
+
+	public void unreserveForCall(string socket) {
+		Socket sock = getSocket (socket);
+		if (reservedForCall.ContainsKey (sock)) {
+			reservedForCall [sock] -= 1;
+			if (reservedForCall [sock] < 0) {
+				reservedForCall [sock] = 0;
+			}
+		} else {
+			reservedForCall[sock] = 0;
+		}
+	}
+
+	public bool isReservedForCall(string socket) {
+		Socket sock = getSocket (socket);
+		if (reservedForCall.ContainsKey (sock)) {
+			return reservedForCall [sock] > 0;
+		} else {
+			return false;
+		}
+	}
+
 	public bool areSocketsConnected(string a, string b) {
 		return getConnectedTo (getSocket(a)) == getSocket(b);
     }
 
-    public Socket getConnectedTo(Socket socket)
+    private Socket getConnectedTo(Socket socket)
     {
         foreach (Tuple<Socket,Socket> connection in connections)
         {
@@ -59,8 +105,12 @@ public class SocketController : MonoBehaviour {
         return null;
     }
 
-	public Socket getConnectedTo(string socketName) {
-		return getConnectedTo (getSocket (socketName));
+	public string getConnectedTo(string socketName) {
+		var result = getConnectedTo (getSocket (socketName));
+		if (result == null) {
+			return null;
+		}
+		return result.name;
 	}
 
 
@@ -73,8 +123,8 @@ public class SocketController : MonoBehaviour {
 		return null;
 	}
 
-    public List<Socket> getAllSockets() {
-		return sockets;
+    public List<string> getAllSockets() {
+		return (from s in sockets select s.name).ToList();
     }
 
 	public List<Tuple<string,string>> GetConnectedSockets() {
@@ -122,15 +172,14 @@ public class SocketController : MonoBehaviour {
 		Debug.Log("Inserted");
     }
 
-	public void setLED(string socket, string color) {
+	public void addName(string socket, string name) {
+		Socket sock = getSocket (socket);
+		sock.addName (name);
+	}
+
+	public void setLED(string socket, Socket.LEDColor color) {
 		Socket s = getSocket (socket);
-		if (color == "RED") { 
-			s.setLED (Socket.LEDColor.Red);
-		} else if (color == "GREEN") { 
-			s.setLED(Socket.LEDColor.Green);
-		} else if (color == "OFF") { 
-			s.setLED(Socket.LEDColor.Off);
-		}
+		s.setLED (color);
 	}
 
     public void SocketClick(Socket socket) {

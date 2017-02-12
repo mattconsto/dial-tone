@@ -14,11 +14,11 @@ public class BookManager : MonoBehaviour {
     {
         Debug.Log("BookManager on " + gameObject.name);
     }
-    public void populate(List<Socket> socketList)
+    public void populate(List<string> socketList)
     {
         Debug.Log("POPULATING BOOK");
         StringBuilder str = new StringBuilder();
-        foreach (Socket sckt in socketList)
+        foreach (string sckt in socketList)
         {
             //foreach(string name in sckt.)
             //str.Append(sckt.name + " - " + "HUMANNAME" + "\n");
