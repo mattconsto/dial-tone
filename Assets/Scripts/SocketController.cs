@@ -26,6 +26,7 @@ public class SocketController : MonoBehaviour {
 	public Socket operatorSocket;
 	public Socket tapASocket;
 	public Socket tapBSocket;
+	public Animator tapBoxAnimator;
 
 	public GameObject bubbleHappy;
 	public GameObject bubbleSad;
@@ -283,6 +284,7 @@ public class SocketController : MonoBehaviour {
 			if (connA != null) {
 				color = connA.liveColor;
 				Debug.Log (color);
+				tapBoxAnimator.SetBool ("PortChange", false);
 			} else if (connB != null) {
 				color = connB.liveColor;
 				Debug.Log (color);

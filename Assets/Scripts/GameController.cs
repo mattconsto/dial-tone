@@ -5,8 +5,10 @@ using System.Linq;
 
 public class GameController : MonoBehaviour {
 
-	//public diagloge
-	public float betweenCalls_MIN = 2.0f;
+    //public dialog
+
+    public StrikeCounter strikeCounter;
+    public float betweenCalls_MIN = 2.0f;
 	public float betweenCalls_MAX = 5.0f;
 	ConversationLoader loader = new ConversationLoader ();
 	public SocketController sockControl;
@@ -16,7 +18,6 @@ public class GameController : MonoBehaviour {
 	public static string OPERATOR_NAME = "operator";
     public ConversationHandler conversationHandler;
 
-    public int score = 0;
 	int day = 1;
 	int callsToday = 0;
     int maxSimultaneousCalls = 2;
@@ -100,7 +101,7 @@ public class GameController : MonoBehaviour {
 		foreach (Call call in calls) {
 			string connected = sockControl.getConnectedTo (call.incomingPort);
             string tapConnection = sockControl.getConnectedTo("tappingSocket");
-            bool keepAlive = call.handleState (connected, sockControl, OPERATOR_NAME, conversationHandler);
+            bool keepAlive = call.handleState (connected, sockControl, OPERATOR_NAME, conversationHandler, strikeCounter);
 
 			if (!keepAlive) {
 				callsToDelete.Add (call);

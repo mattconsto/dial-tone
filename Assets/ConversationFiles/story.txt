@@ -1,0 +1,33 @@
+***
+Hello,
+Hi. Have the materials arrived?
+Yes
+That's good to hear.
+***
+Hello,
+Hi. The project should be done by Friday.
+That's great news
+I know.
+***
+Hello,
+Hi, Bill is going somewhere on Friday.
+Do you know where?
+Not yet.
+OK, let me know when you find out.
+***
+Hello,
+Hey, we've finished the project. We need a guy to carry it.
+I'll try to find someone.
+***
+Hello,
+Hi, Bill will be at the building in quadrant B4.
+Good to hear.
+***
+Hello,
+Hi, {0} will be delivering the package.
+Sure
+***
+Hello,
+Hey, are you ready for tomorrow
+Yes.
+Great news, have fun.

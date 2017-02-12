@@ -79,7 +79,7 @@ public class Call {
 		};
 	}
 
-	public bool handleState(string connectedTo, SocketController controller, string operatorSocket, ConversationHandler convHandle) {
+	public bool handleState(string connectedTo, SocketController controller, string operatorSocket, ConversationHandler convHandle, StrikeCounter counter) {
 		if (previousState != state) {
 			Debug.Log(incomingPort + " has changed from " + previousState + " to " + state);
 		}
@@ -179,7 +179,8 @@ public class Call {
 		case State.DISCONNECT_NEGATIVE:
 			if (previousState != state) {
 				controller.sadAt (incomingPort);
-				controller.setLED (incomingPort, Socket.LEDColor.Off);
+                counter.addCitation();
+    			controller.setLED (incomingPort, Socket.LEDColor.Off);
 				controller.setLED (targetPort, Socket.LEDColor.Off);
 				if (connectedTo != null) {
 					controller.setLED (connectedTo, Socket.LEDColor.Off);
