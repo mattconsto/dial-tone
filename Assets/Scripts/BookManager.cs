@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +7,6 @@ public class BookManager : MonoBehaviour {
 
     public Text txt1;
     public Text txt2;
-    public Animation anim;
     bool bookOpen = false;
 
     private void Awake()
@@ -34,20 +32,5 @@ public class BookManager : MonoBehaviour {
             outputTxt.text += "____________________________ \n\n";
             i++;
         }
-        gameObject.SetActive(false);
-    }
-    public void openBook()
-    {
-        if (bookOpen)
-            gameObject.SetActive(false);
-        else
-        {
-            anim.Stop();
-            anim.Play();
-            gameObject.SetActive(true);
-        }
-        bookOpen = !bookOpen;
-        Debug.Log("OPENING BOOK");
-        Debug.Log("OPENED BOOK");
     }
 }
