@@ -284,11 +284,11 @@ public class SocketController : MonoBehaviour {
 			if (connA != null) {
 				color = connA.liveColor;
 				Debug.Log (color);
-				tapBoxAnimator.SetBool ("PortChange", false);
 			} else if (connB != null) {
 				color = connB.liveColor;
 				Debug.Log (color);
 			}
+			tapBoxAnimator.SetBool ("PortChange", color == Socket.LEDColor.Green);
 			tapASocket.setLED (color);
 			tapBSocket.setLED (color);
 		}
@@ -329,4 +329,3 @@ public class SocketController : MonoBehaviour {
 		}
 	}
 }
-
