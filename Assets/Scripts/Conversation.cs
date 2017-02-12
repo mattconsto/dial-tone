@@ -28,7 +28,11 @@ public class Conversation {
 	}
 	public SentanceObject getNextSentance()
 	{
-		string str = (string)sentances [sentance];
+        string str;
+        if (!hasNextSentance())
+            str = "...";
+        else
+		    str = (string)sentances [sentance];
 		sentance++;
 		SentanceObject obj = new SentanceObject ();
 		obj.content = string.Format(str, formatter);

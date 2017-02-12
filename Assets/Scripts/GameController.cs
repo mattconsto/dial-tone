@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour {
     public ConversationHandler conversationHandler;
     public GameObject DayTitle;
     public float TITLE_TIME = 2f;
+    public InstructionsScript instructions;
 
     public int score = 0;
 	int day = 1;
@@ -35,6 +36,7 @@ public class GameController : MonoBehaviour {
     bool opConnected = false;
     string portTapTarget = "";
     bool dayStarted = false;
+    int tapsIncoming = 0;
 
 	enum GAMESTATE {START, DRIVE, INTRO,INTRO_INCALL,DAY,DAY_WAITINGONCONNECT}
 	GAMESTATE gamestate = GAMESTATE.START;
@@ -69,8 +71,10 @@ public class GameController : MonoBehaviour {
 			hasInited = true;
 			// Remove the operator from the socket list.
 			socketList = sockControl.getAllSockets().Where(x => x != OPERATOR_NAME).ToList();
-            bookMngr.populate(socketList);
 			assignNames ();
+			bookMngr.populate(socketList, sockControl);
+            portTapTarget = socketList[Random.Range(0, socketList.Count)];
+            Debug.Log("TAP ALL CALLS INVOLVING " + portTapTarget);
         }
       //  Debug.Log("LENGHT" + socketList.Count);
         if (!loader.finishedLoading)
@@ -91,32 +95,53 @@ public class GameController : MonoBehaviour {
         if (!dayStarted)
         {
             dayStarted = true;
-            portTapTarget = socketList[Random.Range(0, socketList.Count)];
+            
             Debug.Log("TAP ALL CALLS INVOLVING " + portTapTarget);
             callsToday = 0;
             Invoke("hideDayTitle", TITLE_TIME);
             DayTitle.gameObject.SetActive(true);
             DayTitle.GetComponentInChildren<Text>().text = "Day " + day;
-
+            instructions.display();
             //WIPE SOCKETS AND WIRES
+            //foreach(Socket skt in sockControl.getAllSockets())
+            if (day == 1)
+            {
+                maxCallsToday = 4;
+                maxSimultaneousCalls = 2;
+                instructions.setInstruction("None.");
+                tapsIncoming = 3;
+                setupTapTarget();
+            }
+            else if (day == 2)
+            {
+                maxCallsToday = 8;
+                maxSimultaneousCalls = 3;
+                tapsIncoming = 1;
+                setupTapTarget();
+            }
+
         }
-        if (day == 1)
+        if (calls.Count == 0 && callsToday == maxCallsToday)
         {
-            maxCallsToday = 4;
-            maxSimultaneousCalls = 2;
+            dayStarted = false;
+            day++;
         }
     }
+    void setupTapTarget()
+    {
+        portTapTarget = socketList[Random.Range(0, socketList.Count)];
+        string name = sockControl.getSocket(portTapTarget).getNames()[0];
+        instructions.setInstruction("Tap calls by connecting to the recording box and connect the recording box to the requested socket.\n\nTap all calls from " + name);
+        socketList = sockControl.getAllSockets().Where(x => x != OPERATOR_NAME && x!=portTapTarget).ToList();
+    }
+
 	void manageCalls()
     {
         timeElapsed = 0;
         
-        if (calls.Count < maxSimultaneousCalls && callsToday < maxCallsToday)
+        if (calls.Count < maxSimultaneousCalls && callsToday < maxCallsToday+tapsIncoming)
         {
             startNewPair();
-        }
-        if(calls.Count==0 && callsToday==maxCallsToday)
-        {
-            dayStarted = false;
         }
 	}
     void hideDayTitle()
@@ -231,6 +256,8 @@ public class GameController : MonoBehaviour {
 		
 	void choosePorts()
 	{
+        bool isTapCall = false;
+
 		//if toOperator, one port needs to be operator port
 		Call call = new Call ();
 		string socketA = getAvailablePort ();
@@ -238,19 +265,39 @@ public class GameController : MonoBehaviour {
 			return;
 		}
 		sockControl.reserveForCall (socketA);
-		string socketB =  getAvailablePort ();
-		if (socketA == null) {// nothing available, clear A.
-			sockControl.reserveForCall (socketA);
-			return;
-		}
-		sockControl.reserveForCall (socketB);
 
-		call.targetPort = socketA;
+        string socketB;
+        if (tapsIncoming > 0 && sockControl.isReservedForCall(portTapTarget) && (Random.Range(0f, 1f) < 1 || callsToday >= maxCallsToday - tapsIncoming))
+        {
+            socketB = portTapTarget;
+            //SET CALL AS SPECIAL
+            isTapCall = true;
+        }
+        else
+        {
+            socketB = getAvailablePort();
+            if (socketB == null)
+            {// nothing available, clear A.
+                sockControl.unreserveForCall(socketA);
+                return;
+            }
+        }
+        sockControl.reserveForCall(socketB);
+
+        call.targetPort = socketA;
 		call.incomingPort = socketB;
-		call.operatorConv = loader.getRandomOperatorConversation ();
+        call.operatorConv = loader.getRandomOperatorConversation();
         call.operatorConv.setFormatter(sockControl.getSocket(call.targetPort).getRandomName());
+        if (isTapCall && loader.hasNextStory())
+        {
+            call.tappedConv = loader.getNextStoryConversation();
+            Debug.Log("ATTATCHED STORY CONVERSATION");
+        }
+        else
+        {
+            call.tappedConv = loader.getRandomTappedConversation();
+        }
         
-        call.tappedConv = loader.getRandomTappedConversation();
         //Display the input socket as lit up
         //tell andy code to listen for connection
         callsToday++;

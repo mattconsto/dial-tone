@@ -24,7 +24,8 @@ public class ConversationLoader {
 		//loadFromFile(drives,"drive.txt");
 		//loadFromFile(requests,"request.txt");
 		loadFromFile(operatorConversations, "operator.txt");
-		loadNames ("names.csv");
+        loadFromFile(story, "story.txt");
+        loadNames ("names.csv");
 		finishedLoading = true;
 		Debug.Log ("Finished loading");
 	}
@@ -81,6 +82,10 @@ public class ConversationLoader {
 			rdr.Close();
 		}
 	}
+    public bool hasNextStory()
+    {
+        return storyProgression < story.Count;
+    }
 	public Conversation getNextStoryConversation()
 	{
 		Conversation toreturn = (Conversation)story[storyProgression];

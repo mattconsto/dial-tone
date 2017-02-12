@@ -30,10 +30,10 @@ public class Call {
 
 
 	// TODO TUNE THE TIMERS
-	public double unansweredTimeoutTime = 10000;
-	public double afterOperatorTimeoutTime = 10000;
+	public double unansweredTimeoutTime = 20000;
+	public double afterOperatorTimeoutTime = 20000;
 	public double convoTimeoutTime = 10000;
-	public double wrongConvoTimeoutTime = 2000;
+	public double wrongConvoTimeoutTime = 3000;
 	public double disconnectGraceTime = 5000; // grace period after call finished to block new calls on this connection.
 
 	private Timer unansweredTimer;
@@ -87,7 +87,7 @@ public class Call {
 		switch (state) {
 		case State.UNANSWERED:
 			if (previousState != state) {
-				controller.setLED (incomingPort, Socket.LEDColor.Red);
+				controller.setLED (incomingPort, Socket.LEDColor.Red_Flash);
 				unansweredTimer.Start ();
 				previousState = state;
 			}
@@ -125,7 +125,7 @@ public class Call {
 			break;
 		case State.DISCONNECTED_AFTER_OPERATOR:
 			if (previousState != state) {
-				controller.setLED (incomingPort, Socket.LEDColor.Red);
+				controller.setLED (incomingPort, Socket.LEDColor.Red_Flash);
 				controller.setLED (operatorSocket, Socket.LEDColor.Off);
 				previousState = state;
 			}
@@ -203,8 +203,8 @@ public class Call {
 			break;
 		case State.WRONG_PERSON_CONNECTED:
 			if (previousState != state) {
-				controller.setLED (incomingPort, Socket.LEDColor.Green);
-				controller.setLED (connectedTo, Socket.LEDColor.Green);
+				controller.setLED (incomingPort, Socket.LEDColor.Red);
+				controller.setLED (connectedTo, Socket.LEDColor.Red);
 
 				// Lock both
 				controller.LockSocket (incomingPort);

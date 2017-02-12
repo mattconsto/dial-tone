@@ -23,12 +23,14 @@ public class ConversationHandler : MonoBehaviour
     }
     IEnumerator sendConversation()
     {
+        Debug.Log("Started new sendConversation()");
         bool hasnext = curconv.hasNextSentance();
-        Debug.Log("HasNext: " + hasnext);
+        //Debug.Log("HasNext: " + hasnext);
         while (hasnext)
         {
             if (!txtwrite.speaking && hasnext)
             {
+                //Debug.Log("sendConversation():"+curconv);
                 SentanceObject sent = curconv.getNextSentance();
                 hasnext = curconv.hasNextSentance();
                 Debug.Log("[conversation]" + sent.content);
@@ -38,7 +40,7 @@ public class ConversationHandler : MonoBehaviour
             }
             yield return new WaitForFixedUpdate();
         }
-        Debug.Log("NO LONGER IN CONVERSATION");
-        curconv = null;
+        //Debug.Log("NO LONGER IN CONVERSATION");
+        //curconv = null;
     }
 }
