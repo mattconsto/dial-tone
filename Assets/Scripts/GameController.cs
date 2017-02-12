@@ -60,10 +60,10 @@ public class GameController : MonoBehaviour {
 			Debug.Log("Soceket COunt:"+sockControl.getAllSockets().Count);
 			hasInited = true;
 			socketList = sockControl.getAllSockets().Where(x => x.name != "operator").ToList();
-            bookMngr.populate(socketList);
 			assignNames ();
+            bookMngr.populate(socketList);
 
-		}
+        }
       //  Debug.Log("LENGHT" + socketList.Count);
         if (!loader.finishedLoading)
 			return;

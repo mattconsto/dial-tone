@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class BookManager : MonoBehaviour {
 
-    public Text outputTxt;
+    public Text txt1;
+    public Text txt2;
     public Animation anim;
     bool bookOpen = false;
 
@@ -17,13 +18,22 @@ public class BookManager : MonoBehaviour {
     public void populate(List<Socket> socketList)
     {
         Debug.Log("POPULATING BOOK");
-        StringBuilder str = new StringBuilder();
+        int i = 0;
+        txt1.text = "____________________________ \n\n";
+        txt2.text = "____________________________ \n\n";
+        Text outputTxt;
         foreach (Socket sckt in socketList)
         {
-            //foreach(string name in sckt.)
-            //str.Append(sckt.name + " - " + "HUMANNAME" + "\n");
+            if (i < (int) (socketList.Count / 2))
+                outputTxt = txt1;
+            else
+                outputTxt = txt2;
+            outputTxt.text +=  sckt.name + ":  \n";
+            foreach (string name in sckt.getNames())
+                outputTxt.text +="\t" + name + "\n";
+            outputTxt.text += "____________________________ \n\n";
+            i++;
         }
-        outputTxt.text = str.ToString();
         gameObject.SetActive(false);
     }
     public void openBook()

@@ -27,8 +27,8 @@ public class Socket : MonoBehaviour {
 		names.Add (name);
 	}
 
-	public string[] getNames(){
-		return (string[]) names.ToArray();
+	public ArrayList getNames(){
+		return  names;
 	}
 
     public bool IsPlugged()
