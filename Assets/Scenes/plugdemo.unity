@@ -174,7 +174,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 183, y: 2}
+  m_AnchoredPosition: {x: 198, y: -72}
   m_SizeDelta: {x: 260, y: 916}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &265191911
@@ -198,18 +198,24 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 4e6afb0c279ae9d41a4dd3e24de7458e, type: 3}
-    m_FontSize: 10
+    m_FontSize: 0
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 1
+    m_MinSize: 0
     m_MaxSize: 62
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "____________________________ \n\n0141:  \n\tKristeen Wesley\n\tMaira Ibarra\n\tRosamond
+    Gallagher\n____________________________ \n\n7217:  \n\tSang Sigler\n\tFermin Markham\n\tCarlo
+    Sawyer\n____________________________ \n\n5722:  \n\tJoel Rodrigue\n\tLacey Bourque\n\tNenita
+    Dahl\n____________________________ \n\n1337:  \n\tRufina Guy\n\tBeatriz Weston\n\tRona
+    Keefer\n____________________________ \n\n9001:  \n\tJack Cline\n\tTessie Costello\n\tDelphine
+    Rutherford\n____________________________ \n\n2048:  \n\tDorthea Bliss\n\tLuciano
+    Hinds\n\tLaurine Dickens\n____________________________ \n\n"
 --- !u!222 &265191912
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -642,7 +648,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -696,6 +702,7 @@ GameObject:
   - component: {fileID: 810302052}
   - component: {fileID: 810302051}
   - component: {fileID: 810302053}
+  - component: {fileID: 810302054}
   m_Layer: 5
   m_Name: AddressBook
   m_TagString: Untagged
@@ -710,7 +717,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 810302049}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1796167964}
@@ -767,12 +774,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -795,7 +802,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1796167968}
-        m_MethodName: openBook
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -804,9 +811,26 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!95 &810302054
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 810302049}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b5740ac18f2f88d4a937f989ca6d989e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &1052023775
 Prefab:
   m_ObjectHideFlags: 0
@@ -1118,7 +1142,6 @@ GameObject:
   - component: {fileID: 1246823810}
   - component: {fileID: 1246823813}
   - component: {fileID: 1246823811}
-  - component: {fileID: 1246823812}
   m_Layer: 0
   m_Name: background
   m_TagString: Untagged
@@ -1179,20 +1202,6 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!114 &1246823812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1246823809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62b9697fdddebdd4b9f92eae594d6f19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  txt1: {fileID: 0}
-  txt2: {fileID: 0}
-  anim: {fileID: 0}
 --- !u!222 &1246823813
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1798,7 +1807,6 @@ GameObject:
   - component: {fileID: 1796167964}
   - component: {fileID: 1796167966}
   - component: {fileID: 1796167965}
-  - component: {fileID: 1796167967}
   - component: {fileID: 1796167968}
   m_Layer: 5
   m_Name: BookLarge
@@ -1824,7 +1832,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -575, y: 420}
+  m_AnchoredPosition: {x: -575, y: -635}
   m_SizeDelta: {x: 770, y: 1027}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1796167965
@@ -1860,21 +1868,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1796167963}
---- !u!111 &1796167967
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1796167963}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 8db2c759ed05706449e134468b16985d, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 8db2c759ed05706449e134468b16985d, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &1796167968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1888,7 +1881,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   txt1: {fileID: 1820488484}
   txt2: {fileID: 265191911}
-  anim: {fileID: 1796167967}
 --- !u!1 &1820488482
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,7 +1913,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -85, y: 2}
+  m_AnchoredPosition: {x: -75, y: -72}
   m_SizeDelta: {x: 260, y: 916}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1820488484
@@ -1945,18 +1937,24 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 4e6afb0c279ae9d41a4dd3e24de7458e, type: 3}
-    m_FontSize: 10
+    m_FontSize: 0
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 1
+    m_MinSize: 0
     m_MaxSize: 62
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "____________________________ \n\n0141:  \n\tKristeen Wesley\n\tMaira Ibarra\n\tRosamond
+    Gallagher\n____________________________ \n\n7217:  \n\tSang Sigler\n\tFermin Markham\n\tCarlo
+    Sawyer\n____________________________ \n\n5722:  \n\tJoel Rodrigue\n\tLacey Bourque\n\tNenita
+    Dahl\n____________________________ \n\n1337:  \n\tRufina Guy\n\tBeatriz Weston\n\tRona
+    Keefer\n____________________________ \n\n9001:  \n\tJack Cline\n\tTessie Costello\n\tDelphine
+    Rutherford\n____________________________ \n\n2048:  \n\tDorthea Bliss\n\tLuciano
+    Hinds\n\tLaurine Dickens\n____________________________ \n\n"
 --- !u!222 &1820488485
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -17,8 +17,8 @@ public class BookManager : MonoBehaviour {
     {
         Debug.Log("POPULATING BOOK");
         int i = 0;
-        txt1.text = "____________________________ \n\n";
-        txt2.text = "____________________________ \n\n";
+        txt1.text = "\n\n";
+        txt2.text = "\n\n";
         Text outputTxt;
         foreach (Socket sckt in socketList)
         {
@@ -29,7 +29,7 @@ public class BookManager : MonoBehaviour {
             outputTxt.text +=  sckt.name + ":  \n";
             foreach (string name in sckt.getNames())
                 outputTxt.text +="\t" + name + "\n";
-            outputTxt.text += "____________________________ \n\n";
+            outputTxt.text += "\n\n";
             i++;
         }
     }

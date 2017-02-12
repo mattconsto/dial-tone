@@ -138,7 +138,7 @@ public class GameController : MonoBehaviour {
 			}
 			if(calls[i].connected)
 			{
-                Debug.Log("ID:" + i + " t:" + calls[i].timeLeft);
+              //  Debug.Log("ID:" + i + " t:" + calls[i].timeLeft);
 				calls[i].timeLeft -= deltaTime;
 				if(calls[i].timeLeft < 0)
 				{

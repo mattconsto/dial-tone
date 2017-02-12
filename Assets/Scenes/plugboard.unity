@@ -174,7 +174,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 183, y: 2}
+  m_AnchoredPosition: {x: 198, y: -72}
   m_SizeDelta: {x: 260, y: 916}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &265191911
@@ -203,13 +203,19 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 62
-    m_Alignment: 3
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "____________________________ \n\n0141:  \n\tKristeen Wesley\n\tMaira Ibarra\n\tRosamond
+    Gallagher\n____________________________ \n\n7217:  \n\tSang Sigler\n\tFermin Markham\n\tCarlo
+    Sawyer\n____________________________ \n\n5722:  \n\tJoel Rodrigue\n\tLacey Bourque\n\tNenita
+    Dahl\n____________________________ \n\n1337:  \n\tRufina Guy\n\tBeatriz Weston\n\tRona
+    Keefer\n____________________________ \n\n9001:  \n\tJack Cline\n\tTessie Costello\n\tDelphine
+    Rutherford\n____________________________ \n\n2048:  \n\tDorthea Bliss\n\tLuciano
+    Hinds\n\tLaurine Dickens\n____________________________ \n\n"
 --- !u!222 &265191912
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -711,7 +717,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 810302049}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1796167964}
@@ -768,7 +774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -1907,7 +1913,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -85, y: 2}
+  m_AnchoredPosition: {x: -75, y: -72}
   m_SizeDelta: {x: 260, y: 916}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1820488484
@@ -1936,13 +1942,19 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 62
-    m_Alignment: 3
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "____________________________ \n\n0141:  \n\tKristeen Wesley\n\tMaira Ibarra\n\tRosamond
+    Gallagher\n____________________________ \n\n7217:  \n\tSang Sigler\n\tFermin Markham\n\tCarlo
+    Sawyer\n____________________________ \n\n5722:  \n\tJoel Rodrigue\n\tLacey Bourque\n\tNenita
+    Dahl\n____________________________ \n\n1337:  \n\tRufina Guy\n\tBeatriz Weston\n\tRona
+    Keefer\n____________________________ \n\n9001:  \n\tJack Cline\n\tTessie Costello\n\tDelphine
+    Rutherford\n____________________________ \n\n2048:  \n\tDorthea Bliss\n\tLuciano
+    Hinds\n\tLaurine Dickens\n____________________________ \n\n"
 --- !u!222 &1820488485
 CanvasRenderer:
   m_ObjectHideFlags: 0
