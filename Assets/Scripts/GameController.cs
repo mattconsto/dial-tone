@@ -65,8 +65,8 @@ public class GameController : MonoBehaviour {
 			hasInited = true;
 			// Remove the operator from the socket list.
 			socketList = sockControl.getAllSockets().Where(x => x != OPERATOR_NAME).ToList();
-			bookMngr.populate(socketList, sockControl);
 			assignNames ();
+			bookMngr.populate(socketList, sockControl);
             portTapTarget = socketList[Random.Range(0, socketList.Count)];
             Debug.Log("TAP ALL CALLS INVOLVING " + portTapTarget);
         }

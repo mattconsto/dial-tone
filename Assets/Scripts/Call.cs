@@ -30,8 +30,8 @@ public class Call {
 
 
 	// TODO TUNE THE TIMERS
-	public double unansweredTimeoutTime = 10000;
-	public double afterOperatorTimeoutTime = 10000;
+	public double unansweredTimeoutTime = 20000;
+	public double afterOperatorTimeoutTime = 20000;
 	public double convoTimeoutTime = 10000;
 	public double wrongConvoTimeoutTime = 3000;
 	public double disconnectGraceTime = 5000; // grace period after call finished to block new calls on this connection.
