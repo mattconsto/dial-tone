@@ -6,6 +6,7 @@ public class ConversationHandler : MonoBehaviour
 {
 
     public TextWriter txtwrite;
+    public TextWriter txtwritetapped;
     Conversation curconvNormal = null;
     Conversation curconvTapped = null;
     bool hasnext = false;
@@ -64,12 +65,12 @@ public class ConversationHandler : MonoBehaviour
         //Debug.Log("HasNext: " + hasnext);
         while (hasnext)
         {
-            if (!txtwrite.speaking && hasnext)
+            if (!txtwritetapped.speaking && hasnext)
             {
                 SentanceObject sent = curconvTapped.getNextSentance();
                 hasnext = curconvTapped.hasNextSentance();
                 Debug.Log("[conversation-tapped]" + sent.content);
-                txtwrite.Say(sent.content, sent.textColor, sent.Alignment);
+                txtwritetapped.Say(sent.content, sent.textColor, sent.Alignment);
             }
             yield return new WaitForFixedUpdate();
         }
