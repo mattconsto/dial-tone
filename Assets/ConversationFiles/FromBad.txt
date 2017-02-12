@@ -51,3 +51,21 @@ Caller: Yeah it's scary, but soon it will be over.
 Caller: I'm involed in something...
 <To>: ... You're scaring me.
 Caller: I shouldn't say over the phone.
+***
+<To>: Hello.
+Caller: Hi. Do you work at the telephone exchange?
+<To>: ... Yes? Who is this?
+Caller: My colleague said you're a good person, so listen closely
+Caller: Don't attend your shift tonight.
+<To>: What the hell are you talking about
+Caller: Trust me.
+***
+<To>: <From>?
+Caller: Yes, but don't say my name on the phone.
+<To>: Okay, sorry. What were you saying earlier?
+Caller: You need to get out of town. It won't be safe after today.
+<To>: ... You're scaring me.
+Caller: I'm sorry, but you have to trust me.
+<To>: I do. Will I see you again?
+Caller: I hope so.
+***

@@ -168,3 +168,25 @@ Caller: <From>...
 <To>: Is that <From>??
 Caller: Yeah. Cancel the thing.
 <To>: Damn. Okay, thanks for telling me.
+***
+Caller: Never gonna give you up.
+<To>: Never gonna let you down.
+Caller: Never gonna run around.
+<To>: And desert you.
+...
+<To>: We're scumbags.
+Caller: Yeah.
+***
+Caller: I found your phone.
+<To>: You're amazing, thank you.
+***
+Caller: No time to talk, can you check the door is locked. Thanks!
+***
+<To>: STOP CALLING ME
+***
+Caller: <To>?
+<To>: Yeah, hi. What's up?
+Caller: Did you ever hear from Ethan?
+<To>: Yeah he said he'd ring you.
+Caller: Hm, he didn't. Okay, thanks.
+<To>: Sure

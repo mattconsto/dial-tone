@@ -7,7 +7,7 @@ Caller: Oh, anything interesting?
 Caller: That's grand, what is it?
 <To>: You'll know tomorrow.
 ***
-Caller: Good day, my friend you'd be able to help me.
+Caller: Good day, my friend said you'd be able to help me.
 <To>: With what?
 Caller: Apparently you're good with electronics?
 <To>: I guess. Why?
@@ -63,5 +63,26 @@ Caller: Wow you're dumb. I'm not gonna bail you out of prison, idiot.
 <To>: Please, I swear I'm loyal. Viva la revolucion.
 ...
 Caller: Hey, my phone was muted... Revolution?
-<To>: Errrrr, it's a funny joke. @#!&
+<To>: Errrrr, it's a funny joke.
+<To>: @#!&
 ***
+<To>: Hey, <To> speaking
+Caller: Hi hi. What are you doing tonight?
+<To>: I shouldn't really talk about it
+Caller: Huh? What does that mean?
+<To>: It's very sensitive
+Caller: That's weird...
+<To>: It'll be obvious later
+<To>: Watch the news
+***
+Caller: Hi <To>, do you want to meet up later?
+<To>: Yeah we definitely should, my house is empty.
+Caller: Amazing. I was wondering...
+<To>: Yeah?
+Caller: Should we do this over the phone? What if someone listens.
+<To>: Good point, they do listen. My friends told me.
+Caller: Your friends?
+<To>: You don't know them, but they say the government listens to our calls.
+<To>: Hopefully they'll fix that soon, maybe even tonight.
+Caller: ... What does that mean?
+<To>: I'll come meet you.
