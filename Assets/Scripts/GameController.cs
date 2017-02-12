@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
 	List<string> socketList;
     public BookManager bookMngr;
 	public static string OPERATOR_NAME = "operator";
+    public ConversationHandler conversationHandler;
 
     public int score = 0;
 	int day = 1;
@@ -28,6 +29,7 @@ public class GameController : MonoBehaviour {
 	float timeElapsed = 0;
 	float callDelay = 0;
     bool opConnected = false;
+    string portTapTarget = "";
 
 	enum GAMESTATE {START, DRIVE, INTRO,INTRO_INCALL,DAY,DAY_WAITINGONCONNECT}
 	GAMESTATE gamestate = GAMESTATE.START;
@@ -42,7 +44,6 @@ public class GameController : MonoBehaviour {
 	void Awake()
 	{
 		loader.init ();
-        
 	}
 
 	/// <summary>
@@ -60,14 +61,14 @@ public class GameController : MonoBehaviour {
 	void Update()
 	{
 		if (!hasInited){
-			Debug.Log("INITING SOCKET LIST");
-			Debug.Log("Soceket COunt:"+sockControl.getAllSockets().Count);
 			hasInited = true;
 			// Remove the operator from the socket list.
 			socketList = sockControl.getAllSockets().Where(x => x != OPERATOR_NAME).ToList();
-			assignNames ();
 			bookMngr.populate(socketList, sockControl);
-		}
+			assignNames ();
+            portTapTarget = socketList[Random.Range(0, socketList.Count)];
+            Debug.Log("TAP ALL CALLS INVOLVING " + portTapTarget);
+        }
       //  Debug.Log("LENGHT" + socketList.Count);
         if (!loader.finishedLoading)
 			return;
@@ -103,7 +104,8 @@ public class GameController : MonoBehaviour {
 		List<Call> callsToDelete = new List<Call>();
 		foreach (Call call in calls) {
 			string connected = sockControl.getConnectedTo (call.incomingPort);
-			bool keepAlive = call.handleState (connected, sockControl, OPERATOR_NAME);
+            string tapConnection = sockControl.getConnectedTo("tappingSocket");
+            bool keepAlive = call.handleState (connected, sockControl, OPERATOR_NAME,tapConnection, conversationHandler);
 
 			if (!keepAlive) {
 				callsToDelete.Add (call);
@@ -196,26 +198,7 @@ public class GameController : MonoBehaviour {
 		//Display the LED for the incoming call
 
 	}
-	IEnumerator sendConversation()
-	{
-		bool hasnext = curconv.hasNextSentance ();
-		Debug.Log("HasNext: "+hasnext);
-		while(hasnext)
-		{
-			if(!txtwrite.speaking)
-			{
-				SentanceObject sent = curconv.getNextSentance();
-				hasnext = curconv.hasNextSentance ();
-				Debug.Log("[Story]"+sent.content);
-				//curconv.getNextSentance().content = string.Format(curconv.getNextSentance().content,curconv.t);
-				//curconv.reset();
-				txtwrite.Say(sent.content,sent.textColor,sent.Alignment);
-			}
-			yield return new WaitForFixedUpdate();
-		}
-		inconversation = false;
-		Debug.Log("NO LONGER IN CONVERSATION");
-	}
+	
 	void startNewPair()
 	{	
 		choosePorts();
@@ -240,11 +223,14 @@ public class GameController : MonoBehaviour {
 
 		call.targetPort = socketA;
 		call.incomingPort = socketB;
-		call.conv = loader.getRandomConversation ();
-		//Display the input socket as lit up
-		//tell andy code to listen for connection
-		
-		calls.Add(call);
+		call.operatorConv = loader.getRandomOperatorConversation ();
+        call.operatorConv.setFormatter(sockControl.getSocket(call.targetPort).getRandomName());
+        
+        call.tappedConv = loader.getRandomTappedConversation();
+        //Display the input socket as lit up
+        //tell andy code to listen for connection
+
+        calls.Add(call);
 	}
 	string getAvailablePort()
 	{
