@@ -47,6 +47,8 @@ public class Call {
 	public string targetPort;
 	public Conversation operatorConv;
     public Conversation tappedConv;
+    public string toName = "";
+    public string fromName = "";
 
     public Call() {
 		// Init timers
@@ -103,7 +105,7 @@ public class Call {
 		case State.OPERATOR_CONNECTED:
 			if (previousState != state) {
 				Debug.Log ("OH HI THE ANSWER IS " + targetPort);
-                    convHandle.setConversation(operatorConv);
+                    convHandle.setConversation(operatorConv,true);
 				controller.setLED (incomingPort, Socket.LEDColor.Green);
 				controller.setLED (operatorSocket, Socket.LEDColor.Green);
 

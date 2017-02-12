@@ -10,6 +10,9 @@ public class ConversationLoader {
 	ArrayList requests = new ArrayList ();
 	ArrayList operatorConversations = new ArrayList ();
     ArrayList story = new ArrayList();
+    ArrayList fromBad = new ArrayList();
+    ArrayList toBad = new ArrayList();
+    ArrayList bothBad = new ArrayList();
 
 
     ArrayList forenames = new ArrayList ();
@@ -24,8 +27,12 @@ public class ConversationLoader {
 		//loadFromFile(drives,"drive.txt");
 		//loadFromFile(requests,"request.txt");
 		loadFromFile(operatorConversations, "operator.txt");
-		loadNames ("names.csv");
-		finishedLoading = true;
+        loadFromFile(story, "story.txt");
+        loadNames ("names.csv");
+        loadFromFile(toBad, "ToBad.txt");
+        loadFromFile(fromBad, "FromBad.txt");
+        loadFromFile(bothBad, "BothBad.txt");
+        finishedLoading = true;
 		Debug.Log ("Finished loading");
 	}
 
@@ -81,6 +88,10 @@ public class ConversationLoader {
 			rdr.Close();
 		}
 	}
+    public bool hasNextStory()
+    {
+        return storyProgression < story.Count;
+    }
 	public Conversation getNextStoryConversation()
 	{
 		Conversation toreturn = (Conversation)story[storyProgression];
@@ -99,6 +110,29 @@ public class ConversationLoader {
         int convo = Random.Range(0, (conversations.Count - 1));
         ((Conversation)conversations[convo]).reset();
         return (Conversation)conversations[convo];
+    }
+    public Conversation getRandomBadConvo(bool from, bool to)
+    {
+        ArrayList convoList;
+        if (from)
+        {
+            if (to)
+                convoList = bothBad;
+            else
+                convoList = fromBad;
+        }
+        else
+        {
+            if (to)
+                convoList = toBad;
+            else
+                convoList = conversations;
+        }
+
+
+        int convo = Random.Range(0, (convoList.Count - 1));
+        ((Conversation)convoList[convo]).reset();
+        return (Conversation)convoList[convo];
     }
     public Conversation getDriveConversation(int day)
 	{

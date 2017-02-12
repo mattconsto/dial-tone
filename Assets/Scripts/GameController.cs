@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
@@ -17,6 +18,9 @@ public class GameController : MonoBehaviour {
     public BookManager bookMngr;
 	public static string OPERATOR_NAME = "operator";
     public ConversationHandler conversationHandler;
+    public GameObject DayTitle;
+    public float TITLE_TIME = 2f;
+    public InstructionsScript instructions;
 
 	int day = 1;
 	int callsToday = 0;
@@ -32,10 +36,14 @@ public class GameController : MonoBehaviour {
 	float callDelay = 0;
     bool opConnected = false;
     string portTapTarget = "";
+    bool dayStarted = false;
+    int tapsIncoming = 0;
 
 	enum GAMESTATE {START, DRIVE, INTRO,INTRO_INCALL,DAY,DAY_WAITINGONCONNECT}
 	GAMESTATE gamestate = GAMESTATE.START;
-
+    int badGuyCount = 0;
+    int badGuyMax = 3;
+    List<string> badGuyNames = new List<string>();
 
 	//Day Start & beeping
 	//Story call
@@ -51,10 +59,17 @@ public class GameController : MonoBehaviour {
 	/// <summary>
 	/// Randomly gen names and map them to sockets.
 	/// </summary>
-	void assignNames(){
+	void assignNames(int nameCount){
 		foreach (string socket in socketList) {
-			for (int i = 0; i < 3; i++) {
-				sockControl.addName (socket, loader.getRandomName ());
+			for (int i = 0; i < nameCount; i++) {
+                string name = loader.getRandomName();
+                sockControl.addName (socket, name);
+                if(Random.Range(0,1)<0.1 && badGuyCount < badGuyMax)
+                {
+                    badGuyCount++;
+                    badGuyNames.Add(name);
+                    Debug.Log("New Bad Guy:" + name);
+                }
 			}
 		}
 	}
@@ -66,7 +81,7 @@ public class GameController : MonoBehaviour {
 			hasInited = true;
 			// Remove the operator from the socket list.
 			socketList = sockControl.getAllSockets();
-			assignNames ();
+			assignNames (1);
 			bookMngr.populate(socketList, sockControl);
             portTapTarget = socketList[Random.Range(0, socketList.Count)];
             Debug.Log("TAP ALL CALLS INVOLVING " + portTapTarget);
@@ -74,7 +89,8 @@ public class GameController : MonoBehaviour {
       //  Debug.Log("LENGHT" + socketList.Count);
         if (!loader.finishedLoading)
 			return;
-		//setGameState ();
+        //setGameState ();
+        manageDay();
 		timeElapsed += Time.deltaTime;
 		if(timeElapsed >= callDelay)
 		{
@@ -84,17 +100,85 @@ public class GameController : MonoBehaviour {
 		}
 		manageConnections (Time.deltaTime);
 	}
+    void manageDay()
+    {
+        if (!dayStarted)
+        {
+            dayStarted = true;
+            
+            Debug.Log("TAP ALL CALLS INVOLVING " + portTapTarget);
+            callsToday = 0;
+            Invoke("hideDayTitle", TITLE_TIME);
+            DayTitle.gameObject.SetActive(true);
+            DayTitle.GetComponentInChildren<Text>().text = "Day " + day;
+            instructions.display();
+            //WIPE SOCKETS AND WIRES
+            //foreach(Socket skt in sockControl.getAllSockets())
+            if (day == 1)
+            {
+                maxCallsToday = 4;
+                maxSimultaneousCalls = 1;
+                instructions.setInstruction("None.");
+                tapsIncoming = 3;
+                setupTapTarget();
+            }
+            else if (day == 2)
+            {
+                maxCallsToday = 8;
+                maxSimultaneousCalls = 2;
+                tapsIncoming = 1;
+                setupTapTarget();
+            }
+            else if (day == 3)
+            {
+                maxCallsToday = 12;
+                maxSimultaneousCalls = 3;
+                tapsIncoming = 1;
+                setupTapTarget();
+                assignNames(1);
+            }
+            else if (day == 4)
+            {
+                maxCallsToday = 16;
+                maxSimultaneousCalls = 4;
+                tapsIncoming = 1;
+                setupTapTarget();
+                assignNames(1);
+            }
+
+            else if (day == 5)
+            {
+                //END THE GAAAAAAAAAAME
+            }
+
+        }
+        if (calls.Count == 0 && callsToday == maxCallsToday)
+        {
+            dayStarted = false;
+            day++;
+        }
+    }
+    void setupTapTarget()
+    {
+        portTapTarget = socketList[Random.Range(0, socketList.Count)];
+        string name = sockControl.getSocket(portTapTarget).getNames()[0];
+        instructions.setInstruction("Tap calls by connecting to the recording box and connect the recording box to the requested socket.\n\nTap all calls from " + name);
+        socketList = sockControl.getAllSockets().Where(x => x != OPERATOR_NAME && x!=portTapTarget).ToList();
+    }
+
 	void manageCalls()
     {
         timeElapsed = 0;
-        if (calls.Count < maxSimultaneousCalls)
+        
+        if (calls.Count < maxSimultaneousCalls && callsToday < maxCallsToday+tapsIncoming)
         {
             startNewPair();
         }
-        if (day == 1) {
-			
-		}
 	}
+    void hideDayTitle()
+    {
+        DayTitle.gameObject.SetActive(false);
+    }
 	void manageConnections(float deltaTime)
 	{
 		List<Call> callsToDelete = new List<Call>();
@@ -210,22 +294,39 @@ public class GameController : MonoBehaviour {
 			return;
 		}
 		sockControl.reserveForCall (socketA);
-		string socketB =  getAvailablePort ();
-		if (socketA == null) {// nothing available, clear A.
-			sockControl.reserveForCall (socketA);
-			return;
-		}
-		sockControl.reserveForCall (socketB);
 
-		call.targetPort = socketA;
+        string socketB;
+         socketB = getAvailablePort();
+        if (socketB == null)
+        {// nothing available, clear A.
+            sockControl.unreserveForCall(socketA);
+            return;
+        }
+        sockControl.reserveForCall(socketB);
+
+        call.targetPort = socketA;
 		call.incomingPort = socketB;
-		call.operatorConv = loader.getRandomOperatorConversation ();
-        call.operatorConv.setFormatter(sockControl.getSocket(call.targetPort).getRandomName());
+        call.fromName = sockControl.getSocket(call.incomingPort).getRandomName();
+        call.toName = sockControl.getSocket(call.targetPort).getRandomName();
+        call.operatorConv = loader.getRandomOperatorConversation();
+        call.operatorConv.setFormatter(call.toName);
         
-        call.tappedConv = loader.getRandomTappedConversation();
+
+        bool to = false;
+        bool from = false;
+        if (badGuyNames.Contains(call.toName))
+            to = true;
+        if (badGuyNames.Contains(call.fromName))
+            from = true;
+        call.tappedConv = loader.getRandomBadConvo(from, to);
+        call.tappedConv.toReplace = call.toName;
+        call.tappedConv.fromReplace = call.fromName;
+
+
+
         //Display the input socket as lit up
         //tell andy code to listen for connection
-
+        callsToday++;
         calls.Add(call);
 	}
 	string getAvailablePort()
