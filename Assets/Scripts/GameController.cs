@@ -19,7 +19,8 @@ public class GameController : MonoBehaviour {
     public int score = 0;
 	int day = 1;
 	int callsToday = 0;
-	int maxCallsToday = 1;
+    int maxSimultaneousCalls = 2;
+	int maxCallsToday = 4;
 	int storycall = 2;
 	List<Call> calls = new List<Call>();
 	bool pairReady = false;
@@ -83,20 +84,14 @@ public class GameController : MonoBehaviour {
 		manageConnections (Time.deltaTime);
 	}
 	void manageCalls()
-	{
-		if (day == 1) {
-			timeElapsed = 0;
-			//at 3 semi-random times start a new pending (Flashing LED > OP > CONN)
-			//for(int i=0;i<3;i++)
-			//{
-				//Invoke("startNewPair",t);
-
-			if (calls.Count < maxCallsToday) {
-				startNewPair();
-			}
-				//t+=Random.Range(betweenCalls_MIN,betweenCalls_MAX);
-			//}
-
+    {
+        timeElapsed = 0;
+        if (calls.Count < maxSimultaneousCalls)
+        {
+            startNewPair();
+        }
+        if (day == 1) {
+			
 		}
 	}
 	void manageConnections(float deltaTime)
