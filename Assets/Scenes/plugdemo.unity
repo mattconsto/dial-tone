@@ -1439,6 +1439,7 @@ GameObject:
   - component: {fileID: 1162630965}
   - component: {fileID: 1162630964}
   - component: {fileID: 1162630966}
+  - component: {fileID: 1162630967}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1460,6 +1461,7 @@ MonoBehaviour:
   strikeCounter: {fileID: 22079218}
   betweenCalls_MIN: 2
   betweenCalls_MAX: 5
+  loader: {fileID: 1162630967}
   sockControl: {fileID: 1490636461}
   txtwrite: {fileID: 1980224827}
   bookMngr: {fileID: 1796167968}
@@ -1493,6 +1495,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   txtwrite: {fileID: 1980224827}
   txtwritetapped: {fileID: 1986066528}
+--- !u!114 &1162630967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1162630963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc2a14d4f9246b040af69f9f0d68cbd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conversationsFile: {fileID: 4900000, guid: 873a6f097d28f1b47bae362ccb67ceb0, type: 3}
+  bothBadFile: {fileID: 4900000, guid: 6747a5b7510f1a849947cac5c46d8862, type: 3}
+  storyFile: {fileID: 4900000, guid: fdde31f349dd31944ac9622e09a1c966, type: 3}
+  fromBadFile: {fileID: 4900000, guid: b7a6f439bf015d44e8ba9c8f00eaf109, type: 3}
+  toBadFile: {fileID: 4900000, guid: cf2bfac04f2d1f746b1dab7bb4abffb4, type: 3}
+  operatorFile: {fileID: 4900000, guid: 8d1d4178a82f416459b45db347089608, type: 3}
+  namesFile: {fileID: 4900000, guid: 114a6a0b3a62f2040ae7e19f0142d011, type: 3}
+  finishedLoading: 0
 --- !u!1001 &1167856313
 Prefab:
   m_ObjectHideFlags: 0

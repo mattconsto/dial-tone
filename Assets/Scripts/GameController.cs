@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
 	public StrikeCounter strikeCounter;
 	public float betweenCalls_MIN = 2.0f;
 	public float betweenCalls_MAX = 5.0f;
-	ConversationLoader loader = new ConversationLoader ();
+	public ConversationLoader loader;
 	public SocketController sockControl;
 	public TextWriter txtwrite;
 	List<string> socketList;
