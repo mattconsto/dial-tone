@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour {
 	float timeElapsed = 0;
 	float callDelay = 0;
     bool opConnected = false;
+    string portTapTarget = "";
 
 	enum GAMESTATE {START, DRIVE, INTRO,INTRO_INCALL,DAY,DAY_WAITINGONCONNECT}
 	GAMESTATE gamestate = GAMESTATE.START;
@@ -43,7 +44,6 @@ public class GameController : MonoBehaviour {
 	void Awake()
 	{
 		loader.init ();
-        
 	}
 
 	/// <summary>
@@ -61,14 +61,14 @@ public class GameController : MonoBehaviour {
 	void Update()
 	{
 		if (!hasInited){
-			Debug.Log("INITING SOCKET LIST");
-			Debug.Log("Soceket COunt:"+sockControl.getAllSockets().Count);
 			hasInited = true;
 			// Remove the operator from the socket list.
 			socketList = sockControl.getAllSockets().Where(x => x != OPERATOR_NAME).ToList();
             bookMngr.populate(socketList);
 			assignNames ();
-		}
+            portTapTarget = socketList[Random.Range(0, socketList.Count)];
+            Debug.Log("TAP ALL CALLS INVOLVING " + portTapTarget);
+        }
       //  Debug.Log("LENGHT" + socketList.Count);
         if (!loader.finishedLoading)
 			return;
