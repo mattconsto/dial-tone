@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class InstructionsScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public GameObject note;
+    private void Awake()
+    {
+        note.gameObject.SetActive(false);
+    }
+	public void toggleDisplayed()
+    {
+        note.gameObject.SetActive(!note.gameObject.activeSelf);
+    }
 }
