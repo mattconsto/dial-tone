@@ -283,10 +283,8 @@ public class SocketController : MonoBehaviour {
 			Socket.LEDColor color = Socket.LEDColor.Off;
 			if (connA != null) {
 				color = connA.liveColor;
-				Debug.Log (color);
 			} else if (connB != null) {
 				color = connB.liveColor;
-				Debug.Log (color);
 			}
 			tapBoxAnimator.SetBool ("PortChange", color == Socket.LEDColor.Green);
 			tapASocket.setLED (color);

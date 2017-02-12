@@ -38,7 +38,7 @@ public class Conversation {
 		sentance++;
 		SentanceObject obj = new SentanceObject ();
 		obj.content = string.Format(str, formatter);
-        obj.content = str.Replace("<TO>", toReplace).Replace("<FROM>", fromReplace);
+		obj.content = obj.content.Replace("<To>", toReplace).Replace("<From>", fromReplace);
 		if (isperson1) {
 			obj.textColor = person1;
 			obj.Alignment = "left";

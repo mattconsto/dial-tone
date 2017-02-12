@@ -30,8 +30,8 @@ public class Call {
 
 
 	// TODO TUNE THE TIMERS
-	public double unansweredTimeoutTime = 20000;
-	public double afterOperatorTimeoutTime = 20000;
+	public double unansweredTimeoutTime = 30000;
+	public double afterOperatorTimeoutTime = 30000;
 	public double convoTimeoutTime = 10000;
 	public double wrongConvoTimeoutTime = 3000;
 	public double disconnectGraceTime = 5000; // grace period after call finished to block new calls on this connection.
@@ -105,7 +105,11 @@ public class Call {
 		case State.OPERATOR_CONNECTED:
 			if (previousState != state) {
 				Debug.Log ("OH HI THE ANSWER IS " + targetPort);
-                    convHandle.setConversation(operatorConv,true);
+                convHandle.setConversation(operatorConv,true);
+				if (controller.isTapped (incomingPort)) {
+					Debug.Log ("TAPPED");
+					convHandle.setConversation(operatorConv,false);
+				}
 				controller.setLED (incomingPort, Socket.LEDColor.Green);
 				controller.setLED (operatorSocket, Socket.LEDColor.Green);
 
@@ -143,6 +147,9 @@ public class Call {
 			break;
 		case State.TALKING:
 			if (previousState != state) {
+				if (controller.isTapped (incomingPort)) {
+					convHandle.setConversation(tappedConv,false);
+				}
 				controller.setLED (incomingPort, Socket.LEDColor.Green);
 				controller.setLED (targetPort, Socket.LEDColor.Green);
 
