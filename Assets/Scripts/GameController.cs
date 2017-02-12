@@ -66,7 +66,7 @@ public class GameController : MonoBehaviour {
 			// Remove the operator from the socket list.
 			socketList = sockControl.getAllSockets().Where(x => x != OPERATOR_NAME).ToList();
 			assignNames ();
-            bookMngr.populate(socketList);
+			bookMngr.populate(socketList, sockControl);
 		}
       //  Debug.Log("LENGHT" + socketList.Count);
         if (!loader.finishedLoading)

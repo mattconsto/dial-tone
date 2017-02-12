@@ -33,7 +33,7 @@ public class Socket : MonoBehaviour {
 		names.Add (name);
 	}
 
-	public ArrayList getNames(){
+	public List<string> getNames(){
 		return  names;
 	}
 

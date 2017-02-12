@@ -177,6 +177,10 @@ public class SocketController : MonoBehaviour {
 		sock.addName (name);
 	}
 
+	public List<string> getNames(string socket){
+		return getSocket (socket).getNames ();
+	}
+
 	public void setLED(string socket, Socket.LEDColor color) {
 		Socket s = getSocket (socket);
 		s.setLED (color);

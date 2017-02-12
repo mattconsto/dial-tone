@@ -13,23 +13,26 @@ public class BookManager : MonoBehaviour {
     {
         Debug.Log("BookManager on " + gameObject.name);
     }
-    public void populate(List<string> socketList)
+    public void populate(List<string> socketList, SocketController sockControl)
     {
         Debug.Log("POPULATING BOOK");
         int i = 0;
-        txt1.text = "\n\n";
-        txt2.text = "\n\n";
+        txt1.text = "____________________________\n\n";
+		txt2.text = "____________________________\n\n";
         Text outputTxt;
-        foreach (Socket sckt in socketList)
+        foreach (string sckt in socketList)
         {
-            if (i < (int) (socketList.Count / 2))
-                outputTxt = txt1;
-            else
-                outputTxt = txt2;
-            outputTxt.text +=  sckt.name + ":  \n";
-            foreach (string name in sckt.getNames())
-                outputTxt.text +="\t" + name + "\n";
-            outputTxt.text += "\n\n";
+			if (i < (int)(socketList.Count / 2)) {
+				outputTxt = txt1;
+			}
+			else {
+				outputTxt = txt2;
+			}
+            outputTxt.text +=  sckt + ":  \n";
+			foreach (string name in sockControl.getNames(sckt)) {
+				outputTxt.text += "\t" + name + "\n";
+			}
+			outputTxt.text += "____________________________\n\n";
             i++;
         }
     }
