@@ -56,12 +56,12 @@ public class SocketController : MonoBehaviour {
 
 	public void happyAt(string socket) {
 		Socket sock = getSocket(socket);
-		GameObject.Instantiate (bubbleHappy, sock.transform.position + new Vector3(15,25,-50), Quaternion.identity, transform);
+		GameObject.Instantiate (bubbleHappy, sock.transform.position + new Vector3(15,50,-50), Quaternion.identity, transform);
 		//TODO some form of scoring
 	}
 	public void sadAt(string socket) {
 		Socket sock = getSocket(socket);
-		GameObject.Instantiate (bubbleSad, sock.transform.position + new Vector3(15,25,-50), Quaternion.identity, transform);
+		GameObject.Instantiate (bubbleSad, sock.transform.position + new Vector3(15,50,-50), Quaternion.identity, transform);
 		//TODO some form of scoring
 	}
 
