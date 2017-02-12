@@ -20,8 +20,8 @@ public class BookManager : MonoBehaviour {
         StringBuilder str = new StringBuilder();
         foreach (Socket sckt in socketList)
         {
-            foreach(string name in sckt.)
-            str.Append(sckt.name + " - " + "HUMANNAME" + "\n");
+            //foreach(string name in sckt.)
+            //str.Append(sckt.name + " - " + "HUMANNAME" + "\n");
         }
         outputTxt.text = str.ToString();
         gameObject.SetActive(false);
