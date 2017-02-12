@@ -1,69 +1,170 @@
 ***
-Hello,
-Hey, It's me
-What do you want?
-To Say I'm Sorry
-That's not going to happen
+<To>: Hello,
+Caller: Hey, It's me
+<To>: What do you want?
+Caller: To Say I'm Sorry
+<To>: Too late.
 ***
-Good Morning, Pizza on demand.
-Hello, I'd like to order a pizza to go.
-Sorry, we're closed.
-Wait, why?
-Because our chef just broke up with his boyfriend.
-Oh
-***
-Hi, who is this?
-Would you like to come round to my place, little child.
+<To>: Hi, who is this?
+Caller: Would you like to come round to my place, little child.
 ***
 .... . .-.. .-.. ---
 -- . . - / -- . / .. -. / - .... . / .--. .- .-. -.- / .- - / ... .. -..-
 --- -.-
 ***
-Hello,
-It's me. Would you like to come round for some tea?
-Sure.
+<To>: Hello
+Caller: It's me. Would you like to come round for some tea?
+<To>: Sure.
 ***
-Hello,
-Hey, is there a way to get round the firewall
-Yes, but it's not the sort of thing I should tell you over the phone
-OK, I'll come round
+<To>: Hello
+Caller: Hey, is there a way to get round the firewall?
+<To>: Yes, but it's not the sort of thing I should tell you over the phone
+Caller: OK, I'll come round
 ***
-Good Morning, X-Slavia Imports
-Hello, I'm calling about the job offer for accountant
-Sorry, but we just filled the position an hour ago.
+<To>: Hello
+Caller: Customs confiscated my imported books, I need to rant at someone.
+<To>: Yeah, I'm not in the mood. Sorry.
 ***
-Hello,
-Customs confiscated my imported books, I need to rant at someone.
-Yeah, I'm not in the mood for that. Sorry.
-***
-Hello,
-Hey, are you ready for the big match.
-No, I've got coursework to do, I'll have to pass.
+Caller: Hey, are you ready for the big match?
+<To>: No, I've got work to do, I'll have to pass.
 ***
 ...
-This is Smith, I'm at the point
-Roger, you have clearance to engage
+Caller: This is "Smith", I'm at the point
+<To>: Roger, you have clearance to engage
 ***
-Hi,
-Hi, What are your plans for the weekend?
-Not a lot, why?
-Want to catch a movie?
-Sure
+<To>: Hi
+Caller: Hi, What are your plans for the weekend?
+<To>: Not a lot, why?
+Caller: Want to catch a movie?
+<To>: Sure
 ***
-Hello,
-Good Day Sir, I am the prince of large African country.
+<To>: Hi there
+Caller: Good Day Sir, I am the prince of large African country.
 ...
 ***
-Hello,
-I Just wanted to check if we're still doing that thing on friday
-Yes we are, but don't call me about it again
+Caller: I Just wanted to check if we're still doing that thing on friday
+<To>: Yes we are, but don't call me about it again
 ***
-The speaking clock is currently broken, please try again later
+<To>: Hello
+Caller: Hallo, Ich bins.
+<To>: Was hat passiert
+Caller: Ich bin in Gefängnis
+<To>: Du weißt das ich kann dich nicht helfen.
+Caller: Schade.
 ***
-Hello
-Hallo, Ich bins.
-Was hat passiert
-Ich bin in Gefängnis
-Du weißt das ich kann dich nicht helfen.
-Schade.
-
+<To>: Good afternoon, reception
+Caller: Hi, did you receive a parcel for me?
+<To>: It's in the post room
+Caller: Thanks
+<To>: No problem <From>
+***
+<To>: Hello?
+Caller: Hi <To>, is mum in?
+<To>: Not right now, do you want her to call you back?
+Caller: Sure, thanks. Bye.
+***
+Caller: Hey, can you let me in?
+...
+Caller: Hello? It's really cold.
+...
+***
+Caller: Hey, do you know if school is cancelled tomorrow?
+<To>: I think so, until the audit ends.
+Caller: Awesome, let's meet up.
+<To>: Sure thing, I'll come to yours.
+***
+Caller: Hello?
+<To>: *meow*
+How does a cat even pick up a phone?
+***
+Caller: Hey, I was thinking of doing a game jam. Would you like to join?
+<To>: No thanks, I prefer sleeping.
+Caller: Yeah good point.
+***
+Caller: I was gonna do this in person, but I don't think I can...
+<To>: What?
+Caller: It's just... you and me...
+<To>: No, <From>, please. Give me another chance
+Caller: It's over.
+***
+<To>: Hey there
+Caller: Hi, ASL?
+<To>: ...
+***
+Caller: Hello, I'd like to make a booking for tonight.
+<To>: Of course. Who would you like, <From>?
+Caller: Sara, if she's available.
+<To>: No, she's asked not to be assigned to you any more.
+Caller: ... Right, of course... Then I don't care who.
+<To>: Very good, see you tonight.
+***
+<To>: Hello?
+Caller: Hey, how are you?
+<To>: I told you not to call.
+***
+<To>: Hello?
+Caller: Hi <To>, just rang to say I hope it goes well today.
+<To>: Thanks!
+***
+Caller: Is everything ready?
+<To>: I don't know, I hope so.
+Caller: You need to be sure, it's important.
+<To>: Okay... Yes It's ready.
+Caller: Good. See you later.
+***
+Caller: I fixed it, again.
+<To>: Thank you, I'm sorry.
+Caller: This is the last time, I mean it.
+<To>: Yeah... I'll do better. Thank you.
+***
+<To>: Hello?
+...
+<To>: Hello? Who's there?
+...
+<To>: If you're gonna call me like this at least have the nerve to talk, creep.
+***
+<To>: Hey! Where were you last night?
+Caller: Sorry, I had to go and sort out some stuff with the council.
+<To>: Anything serious?
+Caller: No, it's fine. I'll see you this evening.
+***
+Caller: *cough* *cough*
+<To>: Hey, are you okay?
+Caller: *COUGH* *COUGH*
+<To>: You sound awful.
+...
+<To>: Oh no
+***
+Caller: Hey, <To>, I remembered. It's number 23
+<To>: Amazing, thank you
+Caller: No worries
+***
+Caller: Hey, how are you?
+<To>: I'm okay. Who is this?
+Caller: It's <From>, I was told to ring you.
+<To>: I think you've made a mistake.
+***
+Caller: I'm really sorry about your car.
+<To>: It's alright, the insurance should cover it.
+Caller: I feel terrible about it.
+<To>: Yeah... It's alright, I guess. Don't do it again.
+Caller: Sure.
+***
+Caller: Can we talk about yesterday?
+<To>: Okay but not here, someone might be listening.
+Caller: Who's going to be listening to this?
+<To>: I've heard stories. Let's just meet up.
+***
+<To>: Yeah?
+Caller: I only just heard, are you okay <From>??
+<To>: I'm fine, I just got a little knocked up when they grabbed me.
+Caller: That's not fine, they shouldn't treat you like that.
+<To>: It's their job, I don't blame them.
+Caller: It's not right. Are you home now?
+<To>: No, they want to ask me some stuff. I don't know when I'll be back.
+Caller: <From>...
+<To>: It's okay. I have to go back now. Talk later.
+***
+<To>: Is that <From>??
+Caller: Yeah. Cancel the thing.
+<To>: Damn. Okay, thanks for telling me.
