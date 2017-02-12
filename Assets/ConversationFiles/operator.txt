@@ -18,9 +18,11 @@ Get me connected to {0}. It's urgent.
 Sure
 ***
 {0}, please.
-***
-{0}, {0}, {0}. I need to talk to {0}.
 Sure
 ***
 {0}. Operator, I need {0}
 Sure
+***
+Fucking Hell, get me {0}
+Sure
+***
