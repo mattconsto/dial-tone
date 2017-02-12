@@ -19,7 +19,7 @@ public class Socket : MonoBehaviour {
 	public Sprite LED_RED;
 
 	private Timer flashTimer;
-	private double FLASH_DURATION = 250.0;
+	private double FLASH_DURATION = 500.0;
 	private bool flashOn = false;
 	private LEDColor currentColor = LEDColor.Off;
 

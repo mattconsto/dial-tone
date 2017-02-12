@@ -85,7 +85,7 @@ public class Call {
 		switch (state) {
 		case State.UNANSWERED:
 			if (previousState != state) {
-				controller.setLED (incomingPort, Socket.LEDColor.Red);
+				controller.setLED (incomingPort, Socket.LEDColor.Red_Flash);
 				unansweredTimer.Start ();
 				previousState = state;
 			}
@@ -121,7 +121,7 @@ public class Call {
 			break;
 		case State.DISCONNECTED_AFTER_OPERATOR:
 			if (previousState != state) {
-				controller.setLED (incomingPort, Socket.LEDColor.Red);
+				controller.setLED (incomingPort, Socket.LEDColor.Red_Flash);
 				controller.setLED (operatorSocket, Socket.LEDColor.Off);
 				previousState = state;
 			}
@@ -199,8 +199,8 @@ public class Call {
 			break;
 		case State.WRONG_PERSON_CONNECTED:
 			if (previousState != state) {
-				controller.setLED (incomingPort, Socket.LEDColor.Red_Flash);
-				controller.setLED (connectedTo, Socket.LEDColor.Red_Flash);
+				controller.setLED (incomingPort, Socket.LEDColor.Red);
+				controller.setLED (connectedTo, Socket.LEDColor.Red);
 
 				// Lock both
 				controller.LockSocket (incomingPort);
