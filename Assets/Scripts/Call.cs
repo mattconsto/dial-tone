@@ -148,7 +148,7 @@ public class Call {
 		case State.TALKING:
 			if (previousState != state) {
 				if (controller.isTapped (incomingPort)) {
-					convHandle.setConversation(tappedConv,false);
+					convHandle.setConversation (tappedConv, false);
 				}
 				controller.setLED (incomingPort, Socket.LEDColor.Green);
 				controller.setLED (targetPort, Socket.LEDColor.Green);
@@ -160,8 +160,14 @@ public class Call {
 				convoTimer.Start ();
 				previousState = state;
 			}
-			if (convoTimedout) { // convo success
+			if (convoTimedout && !controller.isTapped (incomingPort)) { // convo success
 				state = State.DISCONNECT_POSITIVE;
+			} else if (controller.isTapped (incomingPort)) {
+				bool convend = !tappedConv.hasNextSentance ();
+				bool textend = !convHandle.txtwritetapped.speaking;
+				if (convend && textend) {
+					state = State.DISCONNECT_POSITIVE;
+				}
 			}
 			break;
 		case State.DISCONNECT_POSITIVE:

@@ -39,6 +39,7 @@ public class TextWriter : MonoBehaviour {
 		}
 	}
 
+
 	// Update is called once per frame
 	void Update () {
 		timeElapsed += Time.deltaTime;

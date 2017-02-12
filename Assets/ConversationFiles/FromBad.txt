@@ -68,4 +68,3 @@ Caller: You need to get out of town. It won't be safe after today.
 Caller: I'm sorry, but you have to trust me.
 <To>: I do. Will I see you again?
 Caller: I hope so.
-***

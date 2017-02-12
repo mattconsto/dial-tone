@@ -781,7 +781,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4035939960523898, guid: fc986470f69026e4fb6237a951a386c2, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1364899133739490, guid: fc986470f69026e4fb6237a951a386c2, type: 2}
       propertyPath: m_Name
@@ -1323,7 +1323,7 @@ GameObject:
   - component: {fileID: 1093247676}
   - component: {fileID: 1093247675}
   m_Layer: 0
-  m_Name: operator_set
+  m_Name: Operator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1342,11 +1342,11 @@ RectTransform:
   - {fileID: 1557344713}
   - {fileID: 676986076}
   m_Father: {fileID: 1490636460}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 735, y: 170}
+  m_AnchoredPosition: {x: 242, y: 170}
   m_SizeDelta: {x: 83, y: 49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1093247675
@@ -1422,6 +1422,9 @@ MonoBehaviour:
   txtwrite: {fileID: 1980224827}
   bookMngr: {fileID: 1796167968}
   conversationHandler: {fileID: 1162630966}
+  DayTitle: {fileID: 594269679}
+  TITLE_TIME: 2
+  instructions: {fileID: 1721474144}
 --- !u!4 &1162630965
 Transform:
   m_ObjectHideFlags: 0
@@ -1447,6 +1450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txtwrite: {fileID: 1980224827}
+  txtwritetapped: {fileID: 1986066528}
 --- !u!1001 &1167856313
 Prefab:
   m_ObjectHideFlags: 0
@@ -2024,8 +2028,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1256880021}
-  - {fileID: 1609967159}
   - {fileID: 1093247674}
+  - {fileID: 1609967159}
   - {fileID: 1052023776}
   - {fileID: 1194752740}
   - {fileID: 1122481617}
@@ -2406,7 +2410,7 @@ GameObject:
   - component: {fileID: 1609967159}
   - component: {fileID: 1609967160}
   m_Layer: 0
-  m_Name: operator_set
+  m_Name: Tapbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2426,11 +2430,11 @@ RectTransform:
   - {fileID: 398441501}
   - {fileID: 2073761000}
   m_Father: {fileID: 1490636460}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 757, y: 177}
+  m_AnchoredPosition: {x: 1123, y: 180}
   m_SizeDelta: {x: 100, y: 59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1609967160
@@ -2694,6 +2698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   note: {fileID: 720143902}
+  instr: {fileID: 0}
 --- !u!4 &1740319434 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4035939960523898, guid: fc986470f69026e4fb6237a951a386c2,
