@@ -79,7 +79,7 @@ public class Call {
 		};
 	}
 
-	public bool handleState(string connectedTo, SocketController controller, string operatorSocket, string tapconnection,ConversationHandler convHandle) {
+	public bool handleState(string connectedTo, SocketController controller, string operatorSocket, ConversationHandler convHandle) {
 		if (previousState != state) {
 			Debug.Log(incomingPort + " has changed from " + previousState + " to " + state);
 		}
@@ -131,7 +131,7 @@ public class Call {
 			}
 			if (afterOperatorTimedout) { // connected too long
 				state = State.DISCONNECT_NEGATIVE;
-			} else if (connectedTo == targetPort || (connectedTo == operatorSocket && tapconnection == targetPort)) {
+			} else if (connectedTo == targetPort) {
 				state = State.TALKING;
 			} else if (connectedTo == operatorSocket) {
 				state = State.OPERATOR_CONNECTED;

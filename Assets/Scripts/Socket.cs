@@ -21,7 +21,9 @@ public class Socket : MonoBehaviour {
 	private Timer flashTimer;
 	private double FLASH_DURATION = 500.0;
 	private bool flashOn = false;
-	private LEDColor currentColor = LEDColor.Off;
+	private LEDColor _currentColor = LEDColor.Off;
+	public LEDColor currentColor {get {return _currentColor;} private set {_currentColor = value;}}
+	public LEDColor liveColor = LEDColor.Off;
 
 
 	public string getRandomName(){
@@ -96,8 +98,10 @@ public class Socket : MonoBehaviour {
 					image.sprite = LED_RED;
 					break;
 				}
+				liveColor = currentColor;
 			} else {
 				image.sprite = LED_OFF;
+				liveColor = LEDColor.Off;
 			}
 		// Static
 		} else {
@@ -112,6 +116,7 @@ public class Socket : MonoBehaviour {
 				image.sprite = LED_OFF;
 				break;
 			}
+			liveColor = currentColor;
 		}
 	}
 }

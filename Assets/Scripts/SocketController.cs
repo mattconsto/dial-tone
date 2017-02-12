@@ -22,6 +22,11 @@ public class SocketController : MonoBehaviour {
 	public GameObject mousePlug;
 	public GameObject cursor;
 
+
+	public Socket operatorSocket;
+	public Socket tapASocket;
+	public Socket tapBSocket;
+
 	public GameObject bubbleHappy;
 	public GameObject bubbleSad;
 
@@ -40,7 +45,10 @@ public class SocketController : MonoBehaviour {
 	// Use this for initializationge
 	void Start () {
 		sockets = GetComponentsInChildren<Socket> ().OfType<Socket> ().ToList ();
-		gr = this.GetComponent<GraphicRaycaster> ();	
+		gr = this.GetComponent<GraphicRaycaster> ();
+		if (operatorSocket == null) {
+			throw new UnityException ();
+		}
 	}
 
     // -- Interface --
@@ -90,6 +98,31 @@ public class SocketController : MonoBehaviour {
 		return getConnectedTo (getSocket(a)) == getSocket(b);
     }
 
+	private Socket getConnectedTappable(Socket socket) {
+		Socket conn = getConnectedTo (socket);
+		// if we're connected to a tap, redirect it to the other end of the tap.
+	
+		if (conn == null) {
+			// (tapASocket and tapBSocket might be null)
+			return conn;
+		}
+		if (conn == tapASocket) {
+			conn = getConnectedTo (tapBSocket);
+		} else if (conn == tapBSocket) {
+			conn = getConnectedTo (tapASocket);
+		}
+		return conn;
+	}
+
+	public bool isTapped(string socket) {
+		Socket sock = getSocket (socket);
+		List<Socket> taps = new List<Socket> () {
+			tapASocket,
+			tapBSocket
+		};
+		return taps.Contains(getConnectedTo(sock));
+	}
+
     private Socket getConnectedTo(Socket socket)
     {
         foreach (Tuple<Socket,Socket> connection in connections)
@@ -106,7 +139,7 @@ public class SocketController : MonoBehaviour {
     }
 
 	public string getConnectedTo(string socketName) {
-		var result = getConnectedTo (getSocket (socketName));
+		var result = getConnectedTappable (getSocket (socketName));
 		if (result == null) {
 			return null;
 		}
@@ -124,7 +157,13 @@ public class SocketController : MonoBehaviour {
 	}
 
     public List<string> getAllSockets() {
-		return (from s in sockets select s.name).ToList();
+		List<Socket> blacklist = new List<Socket> () {
+			operatorSocket,
+			tapASocket,
+			tapBSocket
+		};
+		// Remove any from blacklist
+		return (from s in sockets.Where(x => !blacklist.Contains(x)) select s.name).ToList();
     }
 
 	public List<Tuple<string,string>> GetConnectedSockets() {
@@ -208,6 +247,7 @@ public class SocketController : MonoBehaviour {
 				PickUp(socket);
             }
         }
+
     }
 
 	void LineTo(Vector3 p1, Vector3 p2, LineRenderer r) {
@@ -232,6 +272,19 @@ public class SocketController : MonoBehaviour {
 		foreach (Socket socket in sockets) {
 			ClearLine (socket.transform.gameObject);
 		}
+
+		Socket connA = getConnectedTo (tapASocket);
+		Socket connB = getConnectedTo (tapBSocket);
+		Socket.LEDColor color = Socket.LEDColor.Off;
+		if (connA != null) {
+			color = connA.liveColor;
+			Debug.Log (color);
+		} else if (connB != null) {
+			color = connB.liveColor;
+			Debug.Log (color);
+		}
+		tapASocket.setLED (color);
+		tapBSocket.setLED (color);
 
 		if (isHoldingAPlug()) {
 			// Draw line between mouse and plugged socket
@@ -261,6 +314,7 @@ public class SocketController : MonoBehaviour {
 				}
 			}
 		}
+
 		foreach (Tuple<Socket,Socket> connection in connections) {
 			var first = connection.First.transform.position;
 			var second = connection.Second.transform.position;

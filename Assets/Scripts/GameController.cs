@@ -64,7 +64,7 @@ public class GameController : MonoBehaviour {
 		if (!hasInited){
 			hasInited = true;
 			// Remove the operator from the socket list.
-			socketList = sockControl.getAllSockets().Where(x => x != OPERATOR_NAME).ToList();
+			socketList = sockControl.getAllSockets();
 			assignNames ();
 			bookMngr.populate(socketList, sockControl);
             portTapTarget = socketList[Random.Range(0, socketList.Count)];
@@ -100,7 +100,7 @@ public class GameController : MonoBehaviour {
 		foreach (Call call in calls) {
 			string connected = sockControl.getConnectedTo (call.incomingPort);
             string tapConnection = sockControl.getConnectedTo("tappingSocket");
-            bool keepAlive = call.handleState (connected, sockControl, OPERATOR_NAME,tapConnection, conversationHandler);
+            bool keepAlive = call.handleState (connected, sockControl, OPERATOR_NAME, conversationHandler);
 
 			if (!keepAlive) {
 				callsToDelete.Add (call);
