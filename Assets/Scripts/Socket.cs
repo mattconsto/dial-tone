@@ -33,6 +33,10 @@ public class Socket : MonoBehaviour {
 		names.Add (name);
 	}
 
+	public ArrayList getNames(){
+		return  names;
+	}
+
     public bool IsPlugged()
     {
         return plugInstance != null;

@@ -1,13 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BookManager : MonoBehaviour {
 
-    public Text outputTxt;
-    public Animation anim;
+    public Text txt1;
+    public Text txt2;
     bool bookOpen = false;
 
     private void Awake()
@@ -17,27 +16,21 @@ public class BookManager : MonoBehaviour {
     public void populate(List<string> socketList)
     {
         Debug.Log("POPULATING BOOK");
-        StringBuilder str = new StringBuilder();
-        foreach (string sckt in socketList)
+        int i = 0;
+        txt1.text = "\n\n";
+        txt2.text = "\n\n";
+        Text outputTxt;
+        foreach (Socket sckt in socketList)
         {
-            //foreach(string name in sckt.)
-            //str.Append(sckt.name + " - " + "HUMANNAME" + "\n");
+            if (i < (int) (socketList.Count / 2))
+                outputTxt = txt1;
+            else
+                outputTxt = txt2;
+            outputTxt.text +=  sckt.name + ":  \n";
+            foreach (string name in sckt.getNames())
+                outputTxt.text +="\t" + name + "\n";
+            outputTxt.text += "\n\n";
+            i++;
         }
-        outputTxt.text = str.ToString();
-        gameObject.SetActive(false);
-    }
-    public void openBook()
-    {
-        if (bookOpen)
-            gameObject.SetActive(false);
-        else
-        {
-            anim.Stop();
-            anim.Play();
-            gameObject.SetActive(true);
-        }
-        bookOpen = !bookOpen;
-        Debug.Log("OPENING BOOK");
-        Debug.Log("OPENED BOOK");
     }
 }
