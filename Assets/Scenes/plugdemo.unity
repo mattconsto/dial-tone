@@ -1121,6 +1121,8 @@ MonoBehaviour:
   txtwrite: {fileID: 1980224827}
   bookMngr: {fileID: 1796167968}
   conversationHandler: {fileID: 1162630966}
+  DayTitle: {fileID: 594269679}
+  TITLE_TIME: 2
   score: 0
 --- !u!4 &1162630965
 Transform:

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
@@ -15,6 +16,8 @@ public class GameController : MonoBehaviour {
     public BookManager bookMngr;
 	public static string OPERATOR_NAME = "operator";
     public ConversationHandler conversationHandler;
+    public GameObject DayTitle;
+    public float TITLE_TIME = 2f;
 
     public int score = 0;
 	int day = 1;
@@ -31,6 +34,7 @@ public class GameController : MonoBehaviour {
 	float callDelay = 0;
     bool opConnected = false;
     string portTapTarget = "";
+    bool dayStarted = false;
 
 	enum GAMESTATE {START, DRIVE, INTRO,INTRO_INCALL,DAY,DAY_WAITINGONCONNECT}
 	GAMESTATE gamestate = GAMESTATE.START;
@@ -67,13 +71,12 @@ public class GameController : MonoBehaviour {
 			socketList = sockControl.getAllSockets().Where(x => x != OPERATOR_NAME).ToList();
             bookMngr.populate(socketList);
 			assignNames ();
-            portTapTarget = socketList[Random.Range(0, socketList.Count)];
-            Debug.Log("TAP ALL CALLS INVOLVING " + portTapTarget);
         }
       //  Debug.Log("LENGHT" + socketList.Count);
         if (!loader.finishedLoading)
 			return;
-		//setGameState ();
+        //setGameState ();
+        manageDay();
 		timeElapsed += Time.deltaTime;
 		if(timeElapsed >= callDelay)
 		{
@@ -83,17 +86,43 @@ public class GameController : MonoBehaviour {
 		}
 		manageConnections (Time.deltaTime);
 	}
+    void manageDay()
+    {
+        if (!dayStarted)
+        {
+            dayStarted = true;
+            portTapTarget = socketList[Random.Range(0, socketList.Count)];
+            Debug.Log("TAP ALL CALLS INVOLVING " + portTapTarget);
+            callsToday = 0;
+            Invoke("hideDayTitle", TITLE_TIME);
+            DayTitle.gameObject.SetActive(true);
+            DayTitle.GetComponentInChildren<Text>().text = "Day " + day;
+
+            //WIPE SOCKETS AND WIRES
+        }
+        if (day == 1)
+        {
+            maxCallsToday = 4;
+            maxSimultaneousCalls = 2;
+        }
+    }
 	void manageCalls()
     {
         timeElapsed = 0;
-        if (calls.Count < maxSimultaneousCalls)
+        
+        if (calls.Count < maxSimultaneousCalls && callsToday < maxCallsToday)
         {
             startNewPair();
         }
-        if (day == 1) {
-			
-		}
+        if(calls.Count==0 && callsToday==maxCallsToday)
+        {
+            dayStarted = false;
+        }
 	}
+    void hideDayTitle()
+    {
+        DayTitle.gameObject.SetActive(false);
+    }
 	void manageConnections(float deltaTime)
 	{
 		List<Call> callsToDelete = new List<Call>();
@@ -224,7 +253,7 @@ public class GameController : MonoBehaviour {
         call.tappedConv = loader.getRandomTappedConversation();
         //Display the input socket as lit up
         //tell andy code to listen for connection
-
+        callsToday++;
         calls.Add(call);
 	}
 	string getAvailablePort()
