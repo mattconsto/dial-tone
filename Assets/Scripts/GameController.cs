@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
 	List<string> socketList;
     public BookManager bookMngr;
 	public static string OPERATOR_NAME = "operator";
+    public ConversationHandler conversationHandler;
 
     public int score = 0;
 	int day = 1;
@@ -103,7 +104,8 @@ public class GameController : MonoBehaviour {
 		List<Call> callsToDelete = new List<Call>();
 		foreach (Call call in calls) {
 			string connected = sockControl.getConnectedTo (call.incomingPort);
-			bool keepAlive = call.handleState (connected, sockControl, OPERATOR_NAME);
+            string tapConnection = sockControl.getConnectedTo("tappingSocket");
+            bool keepAlive = call.handleState (connected, sockControl, OPERATOR_NAME,tapConnection, conversationHandler);
 
 			if (!keepAlive) {
 				callsToDelete.Add (call);
@@ -196,26 +198,7 @@ public class GameController : MonoBehaviour {
 		//Display the LED for the incoming call
 
 	}
-	IEnumerator sendConversation()
-	{
-		bool hasnext = curconv.hasNextSentance ();
-		Debug.Log("HasNext: "+hasnext);
-		while(hasnext)
-		{
-			if(!txtwrite.speaking)
-			{
-				SentanceObject sent = curconv.getNextSentance();
-				hasnext = curconv.hasNextSentance ();
-				Debug.Log("[Story]"+sent.content);
-				//curconv.getNextSentance().content = string.Format(curconv.getNextSentance().content,curconv.t);
-				//curconv.reset();
-				txtwrite.Say(sent.content,sent.textColor,sent.Alignment);
-			}
-			yield return new WaitForFixedUpdate();
-		}
-		inconversation = false;
-		Debug.Log("NO LONGER IN CONVERSATION");
-	}
+	
 	void startNewPair()
 	{	
 		choosePorts();
@@ -240,11 +223,12 @@ public class GameController : MonoBehaviour {
 
 		call.targetPort = socketA;
 		call.incomingPort = socketB;
-		call.conv = loader.getRandomConversation ();
-		//Display the input socket as lit up
-		//tell andy code to listen for connection
-		
-		calls.Add(call);
+		call.operatorConv = loader.getRandomConversation ();
+        call.operatorConv.setFormatter(sockControl.getSocket(call.targetPort).getRandomName());
+        //Display the input socket as lit up
+        //tell andy code to listen for connection
+
+        calls.Add(call);
 	}
 	string getAvailablePort()
 	{

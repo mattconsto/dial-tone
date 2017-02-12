@@ -16,6 +16,7 @@ public class TextWriter : MonoBehaviour {
 	}
 
 	public bool Say (string toSay, Color colour, string alignment, bool overwrite=false) {
+        Debug.Log("Say() " + overwrite + " " + speaking);
 		if (!speaking || overwrite) {
 			speaking = true;
 			toWrite = toSay;
@@ -41,6 +42,7 @@ public class TextWriter : MonoBehaviour {
 		text.text = toWrite.Substring (0,Mathf.Min(toWrite.Length, (int)(timeElapsed * cps)));
 		if (text.text == toWrite) {
 			speaking = false;
+            Debug.Log("Stopped speaking - TextWriter");
 		}
 	}
 		

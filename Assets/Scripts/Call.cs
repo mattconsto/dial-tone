@@ -24,6 +24,7 @@ public class Call {
 	private bool convoTimedout = false;
 	private bool wrongConvoTimedout = false;
 	private bool disconnectGraceTimedout = false;
+    private bool spokenToOperator = false;
 
 	private bool afterOperatorTimeoutCalled = false;
 
@@ -44,9 +45,10 @@ public class Call {
 
 	public string incomingPort;
 	public string targetPort;
-	public Conversation conv;
+	public Conversation operatorConv;
+    public Conversation tappedConv;
 
-	public Call() {
+    public Call() {
 		// Init timers
 		unansweredTimer = new Timer(unansweredTimeoutTime);
 		afterOperatorTimer = new Timer(afterOperatorTimeoutTime);
@@ -77,7 +79,7 @@ public class Call {
 		};
 	}
 
-	public bool handleState(string connectedTo, SocketController controller, string operatorSocket) {
+	public bool handleState(string connectedTo, SocketController controller, string operatorSocket, string tapconnection,ConversationHandler convHandle) {
 		if (previousState != state) {
 			Debug.Log(incomingPort + " has changed from " + previousState + " to " + state);
 		}
@@ -101,6 +103,7 @@ public class Call {
 		case State.OPERATOR_CONNECTED:
 			if (previousState != state) {
 				Debug.Log ("OH HI THE ANSWER IS " + targetPort);
+                    convHandle.setConversation(operatorConv);
 				controller.setLED (incomingPort, Socket.LEDColor.Green);
 				controller.setLED (operatorSocket, Socket.LEDColor.Green);
 
@@ -112,8 +115,9 @@ public class Call {
 
 				previousState = state;
 			}
+                //EVERY FRAME
 
-			if (afterOperatorTimedout) { // connected too long
+            if (afterOperatorTimedout) { // connected too long
 				state = State.DISCONNECT_NEGATIVE;
 			} else if (connectedTo != operatorSocket) {
 				state = State.DISCONNECTED_AFTER_OPERATOR;
@@ -127,7 +131,7 @@ public class Call {
 			}
 			if (afterOperatorTimedout) { // connected too long
 				state = State.DISCONNECT_NEGATIVE;
-			} else if (connectedTo == targetPort) {
+			} else if (connectedTo == targetPort || (connectedTo == operatorSocket && tapconnection == targetPort)) {
 				state = State.TALKING;
 			} else if (connectedTo == operatorSocket) {
 				state = State.OPERATOR_CONNECTED;
