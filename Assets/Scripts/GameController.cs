@@ -56,9 +56,9 @@ public class GameController : MonoBehaviour {
 	/// <summary>
 	/// Randomly gen names and map them to sockets.
 	/// </summary>
-	void assignNames(){
+	void assignNames(int nameCount){
 		foreach (string socket in socketList) {
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < nameCount; i++) {
 				sockControl.addName (socket, loader.getRandomName ());
 			}
 		}
@@ -107,7 +107,7 @@ public class GameController : MonoBehaviour {
             if (day == 1)
             {
                 maxCallsToday = 4;
-                maxSimultaneousCalls = 2;
+                maxSimultaneousCalls = 1;
                 instructions.setInstruction("None.");
                 tapsIncoming = 3;
                 setupTapTarget();
@@ -115,9 +115,30 @@ public class GameController : MonoBehaviour {
             else if (day == 2)
             {
                 maxCallsToday = 8;
+                maxSimultaneousCalls = 2;
+                tapsIncoming = 1;
+                setupTapTarget();
+            }
+            else if (day == 3)
+            {
+                maxCallsToday = 12;
                 maxSimultaneousCalls = 3;
                 tapsIncoming = 1;
                 setupTapTarget();
+                assignNames(1);
+            }
+            else if (day == 4)
+            {
+                maxCallsToday = 16;
+                maxSimultaneousCalls = 4;
+                tapsIncoming = 1;
+                setupTapTarget();
+                assignNames(1);
+            }
+
+            else if (day == 5)
+            {
+                //END THE GAAAAAAAAAAME
             }
 
         }
