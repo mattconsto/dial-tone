@@ -13,7 +13,6 @@ public class StrikeCounter : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         citations = gameObject.GetComponentsInChildren<Image>();
-        newDay(4);
 	}
 	
     void newDay(int maxStrikeCount)

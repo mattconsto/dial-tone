@@ -30,8 +30,8 @@ public class Call {
 
 
 	// TODO TUNE THE TIMERS
-	public double unansweredTimeoutTime = 20000;
-	public double afterOperatorTimeoutTime = 20000;
+	public double unansweredTimeoutTime = 30000;
+	public double afterOperatorTimeoutTime = 30000;
 	public double convoTimeoutTime = 10000;
 	public double wrongConvoTimeoutTime = 3000;
 	public double disconnectGraceTime = 5000; // grace period after call finished to block new calls on this connection.
@@ -47,6 +47,8 @@ public class Call {
 	public string targetPort;
 	public Conversation operatorConv;
     public Conversation tappedConv;
+    public string toName = "";
+    public string fromName = "";
 
     public Call() {
 		// Init timers
@@ -79,7 +81,7 @@ public class Call {
 		};
 	}
 
-	public bool handleState(string connectedTo, SocketController controller, string operatorSocket, string tapconnection,ConversationHandler convHandle, StrikeCounter counter) {
+	public bool handleState(string connectedTo, SocketController controller, string operatorSocket, ConversationHandler convHandle, StrikeCounter counter) {
 		if (previousState != state) {
 			Debug.Log(incomingPort + " has changed from " + previousState + " to " + state);
 		}
@@ -103,7 +105,11 @@ public class Call {
 		case State.OPERATOR_CONNECTED:
 			if (previousState != state) {
 				Debug.Log ("OH HI THE ANSWER IS " + targetPort);
-                    convHandle.setConversation(operatorConv);
+                convHandle.setConversation(operatorConv,true);
+				if (controller.isTapped (incomingPort)) {
+					Debug.Log ("TAPPED");
+					convHandle.setConversation(operatorConv,false);
+				}
 				controller.setLED (incomingPort, Socket.LEDColor.Green);
 				controller.setLED (operatorSocket, Socket.LEDColor.Green);
 
@@ -131,7 +137,7 @@ public class Call {
 			}
 			if (afterOperatorTimedout) { // connected too long
 				state = State.DISCONNECT_NEGATIVE;
-			} else if (connectedTo == targetPort || (connectedTo == operatorSocket && tapconnection == targetPort)) {
+			} else if (connectedTo == targetPort) {
 				state = State.TALKING;
 			} else if (connectedTo == operatorSocket) {
 				state = State.OPERATOR_CONNECTED;
@@ -141,6 +147,9 @@ public class Call {
 			break;
 		case State.TALKING:
 			if (previousState != state) {
+				if (controller.isTapped (incomingPort)) {
+					convHandle.setConversation (tappedConv, false);
+				}
 				controller.setLED (incomingPort, Socket.LEDColor.Green);
 				controller.setLED (targetPort, Socket.LEDColor.Green);
 
@@ -151,8 +160,14 @@ public class Call {
 				convoTimer.Start ();
 				previousState = state;
 			}
-			if (convoTimedout) { // convo success
+			if (convoTimedout && !controller.isTapped (incomingPort)) { // convo success
 				state = State.DISCONNECT_POSITIVE;
+			} else if (controller.isTapped (incomingPort)) {
+				bool convend = !tappedConv.hasNextSentance ();
+				bool textend = !convHandle.txtwritetapped.speaking;
+				if (convend && textend) {
+					state = State.DISCONNECT_POSITIVE;
+				}
 			}
 			break;
 		case State.DISCONNECT_POSITIVE:
@@ -179,8 +194,8 @@ public class Call {
 		case State.DISCONNECT_NEGATIVE:
 			if (previousState != state) {
 				controller.sadAt (incomingPort);
-                    counter.addCitation();
-    controller.setLED (incomingPort, Socket.LEDColor.Off);
+                counter.addCitation();
+    			controller.setLED (incomingPort, Socket.LEDColor.Off);
 				controller.setLED (targetPort, Socket.LEDColor.Off);
 				if (connectedTo != null) {
 					controller.setLED (connectedTo, Socket.LEDColor.Off);
