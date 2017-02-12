@@ -40,7 +40,9 @@ public class GameController : MonoBehaviour {
 
 	enum GAMESTATE {START, DRIVE, INTRO,INTRO_INCALL,DAY,DAY_WAITINGONCONNECT}
 	GAMESTATE gamestate = GAMESTATE.START;
-
+    int badGuyCount = 0;
+    int badGuyMax = 3;
+    List<string> badGuyNames = new List<string>();
 
 	//Day Start & beeping
 	//Story call
@@ -59,7 +61,14 @@ public class GameController : MonoBehaviour {
 	void assignNames(int nameCount){
 		foreach (string socket in socketList) {
 			for (int i = 0; i < nameCount; i++) {
-				sockControl.addName (socket, loader.getRandomName ());
+                string name = loader.getRandomName();
+                sockControl.addName (socket, name);
+                if(Random.Range(0,1)<0.1 && badGuyCount < badGuyMax)
+                {
+                    badGuyCount++;
+                    badGuyNames.Add(name);
+                    Debug.Log("New Bad Guy:" + name);
+                }
 			}
 		}
 	}
@@ -71,7 +80,7 @@ public class GameController : MonoBehaviour {
 			hasInited = true;
 			// Remove the operator from the socket list.
 			socketList = sockControl.getAllSockets().Where(x => x != OPERATOR_NAME).ToList();
-			assignNames ();
+			assignNames (1);
 			bookMngr.populate(socketList, sockControl);
             portTapTarget = socketList[Random.Range(0, socketList.Count)];
             Debug.Log("TAP ALL CALLS INVOLVING " + portTapTarget);
@@ -277,8 +286,6 @@ public class GameController : MonoBehaviour {
 		
 	void choosePorts()
 	{
-        bool isTapCall = false;
-
 		//if toOperator, one port needs to be operator port
 		Call call = new Call ();
 		string socketA = getAvailablePort ();
@@ -288,37 +295,34 @@ public class GameController : MonoBehaviour {
 		sockControl.reserveForCall (socketA);
 
         string socketB;
-        if (tapsIncoming > 0 && sockControl.isReservedForCall(portTapTarget) && (Random.Range(0f, 1f) < 1 || callsToday >= maxCallsToday - tapsIncoming))
-        {
-            socketB = portTapTarget;
-            //SET CALL AS SPECIAL
-            isTapCall = true;
-        }
-        else
-        {
-            socketB = getAvailablePort();
-            if (socketB == null)
-            {// nothing available, clear A.
-                sockControl.unreserveForCall(socketA);
-                return;
-            }
+         socketB = getAvailablePort();
+        if (socketB == null)
+        {// nothing available, clear A.
+            sockControl.unreserveForCall(socketA);
+            return;
         }
         sockControl.reserveForCall(socketB);
 
         call.targetPort = socketA;
 		call.incomingPort = socketB;
+        call.fromName = sockControl.getSocket(call.incomingPort).getRandomName();
+        call.toName = sockControl.getSocket(call.targetPort).getRandomName();
         call.operatorConv = loader.getRandomOperatorConversation();
-        call.operatorConv.setFormatter(sockControl.getSocket(call.targetPort).getRandomName());
-        if (isTapCall && loader.hasNextStory())
-        {
-            call.tappedConv = loader.getNextStoryConversation();
-            Debug.Log("ATTATCHED STORY CONVERSATION");
-        }
-        else
-        {
-            call.tappedConv = loader.getRandomTappedConversation();
-        }
+        call.operatorConv.setFormatter(call.toName);
         
+
+        bool to = false;
+        bool from = false;
+        if (badGuyNames.Contains(call.toName))
+            to = true;
+        if (badGuyNames.Contains(call.fromName))
+            from = true;
+        call.tappedConv = loader.getRandomBadConvo(from, to);
+        call.tappedConv.toReplace = call.toName;
+        call.tappedConv.fromReplace = call.fromName;
+
+
+
         //Display the input socket as lit up
         //tell andy code to listen for connection
         callsToday++;

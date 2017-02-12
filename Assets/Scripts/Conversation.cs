@@ -9,8 +9,10 @@ public class Conversation {
 	public Color person2;
 	bool isperson1 = true;
 	string formatter;
+    public string toReplace = "TONAME";
+    public string fromReplace = "FROMNAME";
 
-	public void addSentance(string str)
+    public void addSentance(string str)
 	{
 		sentances.Add (str);
 		//Debug.Log ("ConvCount:" + sentances.Count);
@@ -36,6 +38,7 @@ public class Conversation {
 		sentance++;
 		SentanceObject obj = new SentanceObject ();
 		obj.content = string.Format(str, formatter);
+        obj.content = str.Replace("<TO>", toReplace).Replace("<FROM>", fromReplace);
 		if (isperson1) {
 			obj.textColor = person1;
 			obj.Alignment = "left";
