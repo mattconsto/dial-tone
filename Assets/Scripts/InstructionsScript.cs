@@ -9,7 +9,7 @@ public class InstructionsScript : MonoBehaviour {
     public Text instr;
     private void Awake()
     {
-        note.gameObject.SetActive(false);
+       // note.gameObject.SetActive(false);
     }
 	public void toggleDisplayed()
     {
